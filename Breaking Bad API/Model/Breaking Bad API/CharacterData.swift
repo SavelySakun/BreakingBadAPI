@@ -15,6 +15,7 @@ struct CharacterElement: Codable {
     var img, status, nickname: String
     var appearance: [Int]
     var portrayed: String
+    //var category: [String]
 }
 
 typealias CharacterData = [CharacterElement]

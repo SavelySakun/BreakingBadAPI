@@ -8,12 +8,9 @@
 
 import Foundation
 
-protocol CharacterDataDelegate {
-    func returnData(data: [Character])
-}
+
 class CharacterAPI {
     
-    var delegate: CharacterDataDelegate?
     var characters = [Character]()
     var charactersData = CharacterData()
     
@@ -22,7 +19,6 @@ class CharacterAPI {
         // TODO: Do something with force unwrapping. ->
         let url = URL(string: "https://breakingbadapi.com/api/characters/")!
         let session = URLSession(configuration: .default)
-        
         
         let task = session.dataTask(with: url) { data, response, error in
             
@@ -38,22 +34,9 @@ class CharacterAPI {
             
             completionHandler(.success(self.characters))
             
-            
-            
-            //self.delegate?.returnData(data: self.characters)
-        }
+    }
         
         task.resume()
     }
-    
-//    func fetchDataToCharacterArray(data: CharacterData) {
-//
-//        let totalCharacters = data.count - 1
-//
-//        for index in stride(from: 0, to: totalCharacters, by: 1) {
-//            characters.append(Character(id: data[index].char_id, name: data[index].name, birthday: data[index].birthday, occupation: data[index].occupation, img: data[index].img, status: data[index].status, nickname: data[index].nickname, appearance: data[index].appearance, portrayed: data[index].portrayed))
-//        }
-//
-//        self.delegate?.returnData(data: characters)
-//        }
+
 }
