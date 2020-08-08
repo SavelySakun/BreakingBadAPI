@@ -7,48 +7,55 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CharactersController: UIViewController {
     
     // MARK: - Properties
     private let tableView = UITableView()
-    
-    var characters = [Character(id: 1, name: "Loading", birthday: "Test", occupation: ["Test"], img: "Test", status: "Test", nickname: "Please wait a second...", appearance: [1], portrayed: "Test")]
-    
+    var characters = [Character]()
     var characterAPI = CharacterAPI()
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchDataFromAPI()
         configureUI()
-        characterAPI.performRequest() { result in
-            switch result {
-            case .success(let data):
-                self.characters = data // Передаю дату по персонажам из API.
-                //print(self.characters)
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
-            case .failure(_):
-                break
-            }
-        }
-        
     }
     
     // MARK: - Selectors
     
     // MARK: - Helpers
-    func configureUI() {
-        view.backgroundColor = .white
-        configureTableView()
+    fileprivate func fetchDataFromAPI() {
+        
+        tableView.isHidden = true
+        showIndicator(description: nil)
+        
+        characterAPI.performRequest() { result in
+            switch result {
+            case .success(let data):
+                self.characters = data // Передаю дату по персонажам из API.
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.tableView.isHidden = false
+                    self.dismissIndicator()
+                }
+            case .failure(_):
+                break
+            }
+        }
     }
     
-    func configureTableView() {
-        
+    func configureUI() {
+        view.backgroundColor = .white
+        configureTableViewUI()
+
+    }
+    
+    func configureTableViewUI() {
         // Design setup.
         tableView.backgroundColor = .white
         view.addSubview(tableView)
@@ -76,9 +83,12 @@ extension CharactersController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.characterCell, for: indexPath) as! CharacterCell
         
+        cell.accessoryType = .disclosureIndicator
+        
+        let imageURL = URL(string: characters[indexPath.row].img)
+        cell.characterImageView.sd_setImage(with: imageURL)
         cell.nameLabel.text = characters[indexPath.row].name
         cell.nicknameLabel.text = characters[indexPath.row].nickname
-        cell.characterImageView.image = #imageLiteral(resourceName: "testIMG")
         
         return cell
     }

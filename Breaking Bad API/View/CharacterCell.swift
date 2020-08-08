@@ -18,12 +18,12 @@ class CharacterCell: UITableViewCell {
     
     let nicknameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .systemGray
         return label
     }()
     
     let characterImageView: UIImageView = {
         let iv = UIImageView()
-        
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
@@ -36,9 +36,9 @@ class CharacterCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(characterImageView)
-        characterImageView.anchor(left: leftAnchor, paddingLeft: 10)
-        characterImageView.setDimensions(height: 40, width: 40)
-        characterImageView.layer.cornerRadius = 40 / 2
+        characterImageView.anchor(left: leftAnchor, paddingLeft: 15)
+        characterImageView.setDimensions(height: 55, width: 55)
+        characterImageView.layer.cornerRadius = 55 / 2
         characterImageView.centerY(inView: self)
         
         let stack = UIStackView(arrangedSubviews: [nameLabel, nicknameLabel])
@@ -46,7 +46,7 @@ class CharacterCell: UITableViewCell {
         stack.spacing = 4
         
         addSubview(stack)
-        stack.anchor(left: characterImageView.rightAnchor, right: rightAnchor, paddingLeft: 12, paddingRight: 12)
+        stack.anchor(left: characterImageView.rightAnchor, right: rightAnchor, paddingLeft: 15, paddingRight: 12)
         stack.centerY(inView: characterImageView)
     }
     

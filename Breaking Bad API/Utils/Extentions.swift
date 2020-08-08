@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 // MARK: - Auto layout helpers.
 extension UIView {
@@ -79,5 +80,20 @@ extension UIView {
     func setWidth(width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         widthAnchor.constraint(equalToConstant: width).isActive = true
+    }
+}
+
+// MARK: - MBProgressHUD (Pod)
+extension UIViewController {
+    func showIndicator(title: String? = "Loading", description: String?) {
+       let Indicator = MBProgressHUD.showAdded(to: self.view, animated: true)
+       Indicator.label.text = title
+       Indicator.isUserInteractionEnabled = false
+       Indicator.detailsLabel.text = description
+       Indicator.show(animated: true)
+    }
+    
+    func dismissIndicator() {
+       MBProgressHUD.hide(for: self.view, animated: true)
     }
 }

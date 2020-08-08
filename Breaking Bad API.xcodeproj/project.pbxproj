@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C498017924DD8A790071A81D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017824DD8A790071A81D /* Service.swift */; };
+		0B8D1B71CDB7C56DDEBC3AB4 /* Pods_Breaking_Bad_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E9779849501B8D90761439 /* Pods_Breaking_Bad_API.framework */; };
 		C498017B24DD8B750071A81D /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017A24DD8B750071A81D /* Character.swift */; };
 		C498017E24DD8CAC0071A81D /* CharacterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017D24DD8CAC0071A81D /* CharacterData.swift */; };
 		C498018024DD8CC10071A81D /* CharacterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017F24DD8CC10071A81D /* CharacterAPI.swift */; };
@@ -23,7 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C498017824DD8A790071A81D /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		3D9AB88078C90A5CC94D2C40 /* Pods-Breaking Bad API.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breaking Bad API.release.xcconfig"; path = "Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API.release.xcconfig"; sourceTree = "<group>"; };
+		4ADA2E9C34E08AC2947CB253 /* Pods-Breaking Bad API.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breaking Bad API.debug.xcconfig"; path = "Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API.debug.xcconfig"; sourceTree = "<group>"; };
 		C498017A24DD8B750071A81D /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		C498017D24DD8CAC0071A81D /* CharacterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterData.swift; sourceTree = "<group>"; };
 		C498017F24DD8CC10071A81D /* CharacterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAPI.swift; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		C4F741F224DD0E5300EBD638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4F741F424DD0E5300EBD638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4F741FD24DD11D100EBD638 /* CharactersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersController.swift; sourceTree = "<group>"; };
+		E3E9779849501B8D90761439 /* Pods_Breaking_Bad_API.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Breaking_Bad_API.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,12 +47,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B8D1B71CDB7C56DDEBC3AB4 /* Pods_Breaking_Bad_API.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52D02FF8C4FD71F3E12FECD6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4ADA2E9C34E08AC2947CB253 /* Pods-Breaking Bad API.debug.xcconfig */,
+				3D9AB88078C90A5CC94D2C40 /* Pods-Breaking Bad API.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7E6CDE15E23ECE0F4A11C198 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3E9779849501B8D90761439 /* Pods_Breaking_Bad_API.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C498017C24DD8C830071A81D /* Breaking Bad API */ = {
 			isa = PBXGroup;
 			children = (
@@ -65,7 +85,6 @@
 			children = (
 				C4AA6D3F24DD15BA009585E0 /* Extentions.swift */,
 				C4AA6D4124DD16A1009585E0 /* Constants.swift */,
-				C498017824DD8A790071A81D /* Service.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -75,6 +94,8 @@
 			children = (
 				C4F741E224DD0E5100EBD638 /* Breaking Bad API */,
 				C4F741E124DD0E5100EBD638 /* Products */,
+				52D02FF8C4FD71F3E12FECD6 /* Pods */,
+				7E6CDE15E23ECE0F4A11C198 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,9 +156,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4F741F724DD0E5300EBD638 /* Build configuration list for PBXNativeTarget "Breaking Bad API" */;
 			buildPhases = (
+				F035A13C615B58F634C156AD /* [CP] Check Pods Manifest.lock */,
 				C4F741DC24DD0E5100EBD638 /* Sources */,
 				C4F741DD24DD0E5100EBD638 /* Frameworks */,
 				C4F741DE24DD0E5100EBD638 /* Resources */,
+				32EFBA47DAFCB40B04446965 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -193,6 +216,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		32EFBA47DAFCB40B04446965 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F035A13C615B58F634C156AD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Breaking Bad API-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C4F741DC24DD0E5100EBD638 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -200,7 +265,6 @@
 			files = (
 				C498017B24DD8B750071A81D /* Character.swift in Sources */,
 				C4F741FE24DD11D100EBD638 /* CharactersController.swift in Sources */,
-				C498017924DD8A790071A81D /* Service.swift in Sources */,
 				C4F741E424DD0E5100EBD638 /* AppDelegate.swift in Sources */,
 				C4AA6D4024DD15BA009585E0 /* Extentions.swift in Sources */,
 				C4AA6D4424DD17A0009585E0 /* CharacterCell.swift in Sources */,
@@ -342,6 +406,7 @@
 		};
 		C4F741F824DD0E5300EBD638 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4ADA2E9C34E08AC2947CB253 /* Pods-Breaking Bad API.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -359,6 +424,7 @@
 		};
 		C4F741F924DD0E5300EBD638 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D9AB88078C90A5CC94D2C40 /* Pods-Breaking Bad API.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
