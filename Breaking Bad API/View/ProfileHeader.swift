@@ -1,0 +1,89 @@
+//
+//  CharacterProfile.swift
+//  Breaking Bad API
+//
+//  Created by Савелий Сакун on 09.08.2020.
+//  Copyright © 2020 Savely Sakun. All rights reserved.
+//
+
+import UIKit
+
+class ProfileHeader: UIView {
+    
+    // MARK: - Properties
+    let view: UIView = {
+        let v = UIView()
+        v.backgroundColor = .systemGray6
+        return v
+    }()
+    
+    let profileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.layer.cornerRadius = 200 / 2
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = .green
+        return iv
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.text = "Walter White"
+        return label
+    }()
+    
+    let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = .black
+        label.text = "Heisenberg"
+        return label
+    }()
+    
+    let statusView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
+    let birthdayView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
+    let ocupationView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
+    var actorView = CharacterProperty()
+    
+    // MARK: - Lifecycle
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+    func configureUI() {
+        
+        addSubview(view)
+        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        
+        view.addSubview(profileImageView)
+        profileImageView.setHeight(height: 200)
+        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 100, paddingRight: 100)
+        
+        
+        let nameAndNickStack = UIStackView(arrangedSubviews: [nameLabel, nicknameLabel])
+        view.addSubview(nameAndNickStack)
+        
+        nameAndNickStack.alignment = .center
+        nameAndNickStack.axis = .vertical
+        nameAndNickStack.anchor(top: profileImageView.bottomAnchor, paddingTop: 20)
+        nameAndNickStack.centerX(inView: view)
+        
+        let propertiesStack = UIStackView(arrangedSubviews: [statusView, birthdayView, ocupationView, actorView])
+        propertiesStack.axis = .vertical
+        propertiesStack.spacing = 7
+        
+        view.addSubview(propertiesStack)
+        propertiesStack.anchor(top: nameAndNickStack.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 50, paddingBottom: 20, paddingRight: 50)
+        
+        
+    }
+    
+}

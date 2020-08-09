@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Launching without storyboard.
         window = UIWindow(windowScene: scene)
-        let nav = UINavigationController(rootViewController: CharactersController())
+        let nav = UINavigationController(rootViewController: ProfileController())
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
