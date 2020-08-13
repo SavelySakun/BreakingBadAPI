@@ -20,6 +20,7 @@ class CharactersController: UIViewController {
     // Properties for search
     var filteredCharacters = [Character]()
     lazy var searchController: UISearchController = {
+        
         let searchController = UISearchController(searchResultsController: nil)
         
         searchController.searchResultsUpdater = self
@@ -32,51 +33,31 @@ class CharactersController: UIViewController {
             textField.textColor = .black
             textField.backgroundColor = .white
         }
-        
-        //searchController.searchBar.scopeButtonTitles = ["Breaking Bad", "Better Call Saul"]
-        //searchController.searchBar.delegate = self
-        
         return searchController
     }()
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        fetchDataFromAPI()
+                
         configureUI()
         
-        title = "Characters"
-        //tableView.tableHeaderView?.backgroundColor = .white
-        tableView.tableHeaderView = searchController.searchBar
     }
     
     // MARK: - Selectors
     
     // MARK: - Helpers
-    
-    func filterContentForSearchText(searchText: String) {
-        filteredCharacters = characters.filter({ (character: Character) -> Bool in
-            return character.name.lowercased().contains(searchText.lowercased())
-        })
-        tableView.reloadData()
-    }
-    
-    func isSearchBarEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func isFiltering() -> Bool {
-        return searchController.isActive && (!isSearchBarEmpty())
-    }
-    
-    
-    fileprivate func fetchDataFromAPI() {
+    func configureUI() {
         
-        tableView.isHidden = true
-        showIndicator(description: nil)
+        fetchDataFromAPI()
+        configureTableViewUI()
+    }
+    
+    func fetchDataFromAPI() {
+        tableView.isHidden = true // Hides table view while loads.
+        showIndicator(description: nil) // Loading indicator shows.
         
+        // Fetching data from API.
         characterAPI.performRequest() { result in
             switch result {
             case .success(let data):
@@ -92,16 +73,15 @@ class CharactersController: UIViewController {
         }
     }
     
-    func configureUI() {
-        view.backgroundColor = .white
-        configureTableViewUI()
-
-    }
-    
     func configureTableViewUI() {
+        
         // Design setup.
-        tableView.backgroundColor = .white
+        title = "Characters"
+        view.backgroundColor = .white
         view.addSubview(tableView)
+        
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.backgroundColor = .white
         tableView.frame = view.frame
         tableView.rowHeight = 80
         tableView.register(CharacterCell.self, forCellReuseIdentifier: K.cells.characterCell)
@@ -110,50 +90,81 @@ class CharactersController: UIViewController {
         tableView.tableFooterView = UIView()
         
         // Table View Delegates.
-        //tableView.delegate = self
+        tableView.delegate = self
         tableView.dataSource = self
     }
 }
 
-// Table View Data Source.
+// Methods for search bar.
+extension CharactersController {
+    
+    // Filtering values in tableView.
+    func filterContentForSearchText(searchText: String) {
+        filteredCharacters = characters.filter({ (character: Character) -> Bool in
+            return character.name.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+    // Helpers for search.
+    func isSearchBarEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && (!isSearchBarEmpty())
+    }
+}
 
+// Table View Data Source.
 extension CharactersController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() { return filteredCharacters.count }
         return characters.count
     }
     
+    // Cells setup.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.characterCell, for: indexPath) as! CharacterCell
         
         cell.accessoryType = .disclosureIndicator
         
-        let currentCharacter: Character
-        
         // Checks for filtering.
+        let currentCharacter: Character
         if isFiltering() {
             currentCharacter = filteredCharacters[indexPath.row]
         } else {
             currentCharacter = characters[indexPath.row]
         }
         
+        // Fetching data.
         let imageURL = URL(string: currentCharacter.img)
         cell.characterImageView.sd_setImage(with: imageURL)
         cell.nameLabel.text = currentCharacter.name
         cell.nicknameLabel.text = currentCharacter.nickname
-        
         return cell
     }
 }
 
+// Configure search.
 extension CharactersController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
         
+        let searchBar = searchController.searchBar
         filterContentForSearchText(searchText: searchBar.text!)
     }
-    
-    
+}
+
+// Confugure tap on row.
+extension CharactersController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let index = indexPath.row
+        let vc = ProfileController()
+        vc.selectedCharacter = characters[index]
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

@@ -19,5 +19,4 @@ struct Character {
     let nickname: String
     let appearance: [Int]
     let portrayed: String
-    //let category: [String]
 }

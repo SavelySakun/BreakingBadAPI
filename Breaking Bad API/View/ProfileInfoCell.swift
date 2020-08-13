@@ -17,6 +17,7 @@ class ProfileInfoCell: UITableViewCell {
         label.textColor = .systemGray
         return label
     }()
+
     
     let characterInfoLabel: UILabel = {
         let label = UILabel()
@@ -37,7 +38,6 @@ class ProfileInfoCell: UITableViewCell {
         addSubview(characterInfoLabel)
         characterInfoLabel.centerY(inView: propertyLabel)
         characterInfoLabel.anchor(left: propertyLabel.rightAnchor, paddingLeft: 20)
-        
     }
     
     required init?(coder: NSCoder) {

@@ -7,20 +7,25 @@
 //
 
 import UIKit
+import UIImageViewAlignedSwift
 
-class ProfileHeader: UIView {
+public class ProfileHeader: UIView {
     
     // MARK: - Properties
+    
     let view: UIView = {
         let v = UIView()
         v.backgroundColor = .systemGray6
         return v
     }()
     
-    let profileImageView: UIImageView = {
-        let iv = UIImageView()
+    let profileImageView: UIImageViewAligned = {
+        let iv = UIImageViewAligned()
+        
         iv.layer.cornerRadius = 200 / 2
         iv.clipsToBounds = true
+        iv.alignTop = true
+        
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = .green
         return iv
@@ -29,7 +34,6 @@ class ProfileHeader: UIView {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.text = "Walter White"
         return label
     }()
     
@@ -37,19 +41,18 @@ class ProfileHeader: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
-        label.text = "Heisenberg"
         return label
     }()
     
-    let statusView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
-    let birthdayView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
-    let ocupationView = CharacterProperty(icon: #imageLiteral(resourceName: "actor icon"), property: "Hello")
+    let statusView = CharacterProperty()
+    let birthdayView = CharacterProperty()
+    let ocupationView = CharacterProperty()
     var actorView = CharacterProperty()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         configureUI()
     }
     
@@ -81,9 +84,7 @@ class ProfileHeader: UIView {
         propertiesStack.spacing = 7
         
         view.addSubview(propertiesStack)
-        propertiesStack.anchor(top: nameAndNickStack.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 50, paddingBottom: 20, paddingRight: 50)
-        
-        
+        propertiesStack.anchor(top: nameAndNickStack.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 60, paddingBottom: 30, paddingRight: 60)
     }
     
 }

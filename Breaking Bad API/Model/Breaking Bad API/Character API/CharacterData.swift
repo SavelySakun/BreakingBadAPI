@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias CharacterData = [CharacterElement]
+
 struct CharacterElement: Codable {
     var char_id: Int
     var name, birthday: String
@@ -15,7 +17,5 @@ struct CharacterElement: Codable {
     var img, status, nickname: String
     var appearance: [Int]
     var portrayed: String
-    //var category: [String]
 }
 
-typealias CharacterData = [CharacterElement]

@@ -10,27 +10,26 @@ import UIKit
 
 class CharacterProperty: UIView {
     
-    init(icon: UIImage? = #imageLiteral(resourceName: "actor icon"), property: String? = "Property") {
+    var iconImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "Birthday icon")
+        iv.setDimensions(height: 30, width: 30)
+        return iv
+    }()
+    
+    var propertyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Property"
+        return label
+    }()
+    
+    init() {
         super.init(frame: .zero)
         
         backgroundColor = .white
         layer.cornerRadius = 10
-        //.setHeight(height: 40)
-        
-        let actorIconImageView: UIImageView = {
-            let iv = UIImageView()
-            iv.image = icon
-            iv.setDimensions(height: 30, width: 30)
-            return iv
-        }()
-        
-        let actorLabel: UILabel = {
-            let label = UILabel()
-            label.text = property
-            return label
-        }()
-        
-        let stack = UIStackView(arrangedSubviews: [actorIconImageView, actorLabel])
+
+        let stack = UIStackView(arrangedSubviews: [iconImageView, propertyLabel])
         stack.axis = .horizontal
         stack.spacing = 15
         
@@ -38,7 +37,7 @@ class CharacterProperty: UIView {
         stack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 15, paddingLeft: 15, paddingBottom: 15, paddingRight: 15)
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

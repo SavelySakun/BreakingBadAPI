@@ -7,10 +7,21 @@
 //
 
 import UIKit
+import UIImageViewAlignedSwift
 
 class CharacterCell: UITableViewCell {
     
     // MARK: - Properties
+    let characterImageView: UIImageViewAligned = {
+        let iv = UIImageViewAligned()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.backgroundColor = .lightGray
+        iv.alignTop = true
+        
+        return iv
+    }()
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         return label
@@ -20,15 +31,6 @@ class CharacterCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .systemGray
         return label
-    }()
-    
-    let characterImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.backgroundColor = .lightGray
-        
-        return iv
     }()
     
     // MARK: - Lifecycle
