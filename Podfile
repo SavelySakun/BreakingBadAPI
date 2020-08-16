@@ -8,4 +8,5 @@ target 'Breaking Bad API' do
   # Pods for Breaking Bad API
     pod 'SDWebImage', '~>4.4.2'
     pod 'MBProgressHUD', '~> 1.2.0'
+    pod 'UIImageViewAlignedSwift'
 end

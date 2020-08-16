@@ -3,20 +3,24 @@ PODS:
   - SDWebImage (4.4.8):
     - SDWebImage/Core (= 4.4.8)
   - SDWebImage/Core (4.4.8)
+  - UIImageViewAlignedSwift (0.8.0)
 
 DEPENDENCIES:
   - MBProgressHUD (~> 1.2.0)
   - SDWebImage (~> 4.4.2)
+  - UIImageViewAlignedSwift
 
 SPEC REPOS:
   trunk:
     - MBProgressHUD
     - SDWebImage
+    - UIImageViewAlignedSwift
 
 SPEC CHECKSUMS:
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
+  UIImageViewAlignedSwift: 03914ca2fc6ae49fcd493fbe73568b5e22f6071d
 
-PODFILE CHECKSUM: 086ddb10fd19776dbc634ea4a6bb010a4871799e
+PODFILE CHECKSUM: c6e0bf29dab8f94f3d1e48d4d9506e956130801a
 
 COCOAPODS: 1.9.3

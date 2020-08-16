@@ -14,9 +14,9 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2117E122B4FD44B84D3B5AFC3EBC050B"
-               BuildableName = "Pods-Breaking Bad API.framework"
-               BlueprintName = "Pods-Breaking Bad API"
+               BlueprintIdentifier = "3D2A9F2C1FDD6FC08239E805CF251D13"
+               BuildableName = "UIImageViewAlignedSwift.framework"
+               BlueprintName = "UIImageViewAlignedSwift"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
