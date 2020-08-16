@@ -19,22 +19,20 @@ class ProfileController: UITableViewController {
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         quoteAPI.delegate = self
         self.quoteAPI.performRequest(author: self.selectedCharacter.name)
-        
-        
                         
         configureUI()
     }
     
     // MARK: - Helpers
     func configureUI() {
-
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add to Favorites", style: .done, target: self, action: #selector(addCharacterToFavorites))
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableViewSetup()
     }
@@ -48,7 +46,7 @@ class ProfileController: UITableViewController {
     
     func headerViewSetup() {
         tableView.tableHeaderView = headerView
-        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.4)
+        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
         tableView.sectionHeaderHeight = 45
         
         let imageURL = URL(string: selectedCharacter.img)

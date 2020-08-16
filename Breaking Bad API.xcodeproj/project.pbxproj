@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0B8D1B71CDB7C56DDEBC3AB4 /* Pods_Breaking_Bad_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E9779849501B8D90761439 /* Pods_Breaking_Bad_API.framework */; };
+		C409986124E935EF007F22CE /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409986024E935EF007F22CE /* SettingsController.swift */; };
+		C409986324E93601007F22CE /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409986224E93600007F22CE /* FavoritesController.swift */; };
+		C409986524E9364A007F22CE /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409986424E9364A007F22CE /* MainTabBarController.swift */; };
+		C409986724E988A5007F22CE /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409986624E988A5007F22CE /* SettingCell.swift */; };
 		C409B69124E5AF80009D6A41 /* QuoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B69024E5AF80009D6A41 /* QuoteData.swift */; };
 		C409B69324E5AF9E009D6A41 /* QuoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B69224E5AF9E009D6A41 /* QuoteAPI.swift */; };
 		C409B69524E5B0CC009D6A41 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B69424E5B0CC009D6A41 /* Quote.swift */; };
 		C40F1EBF24DFECBB00AAD8F7 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EBE24DFECBB00AAD8F7 /* ProfileController.swift */; };
-		C40F1EC124DFF79700AAD8F7 /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EC024DFF79700AAD8F7 /* ProfileInfoCell.swift */; };
 		C40F1EC324E0684500AAD8F7 /* ProfileQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */; };
 		C40F1EC524E07C7900AAD8F7 /* CharacterProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */; };
 		C449277424DFE6D300D5720D /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449277324DFE6D300D5720D /* ProfileHeader.swift */; };
@@ -33,11 +36,14 @@
 /* Begin PBXFileReference section */
 		3D9AB88078C90A5CC94D2C40 /* Pods-Breaking Bad API.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breaking Bad API.release.xcconfig"; path = "Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API.release.xcconfig"; sourceTree = "<group>"; };
 		4ADA2E9C34E08AC2947CB253 /* Pods-Breaking Bad API.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breaking Bad API.debug.xcconfig"; path = "Target Support Files/Pods-Breaking Bad API/Pods-Breaking Bad API.debug.xcconfig"; sourceTree = "<group>"; };
+		C409986024E935EF007F22CE /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		C409986224E93600007F22CE /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		C409986424E9364A007F22CE /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		C409986624E988A5007F22CE /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C409B69024E5AF80009D6A41 /* QuoteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteData.swift; sourceTree = "<group>"; };
 		C409B69224E5AF9E009D6A41 /* QuoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteAPI.swift; sourceTree = "<group>"; };
 		C409B69424E5B0CC009D6A41 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		C40F1EBE24DFECBB00AAD8F7 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
-		C40F1EC024DFF79700AAD8F7 /* ProfileInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
 		C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileQuoteCell.swift; sourceTree = "<group>"; };
 		C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterProperty.swift; sourceTree = "<group>"; };
 		C449277324DFE6D300D5720D /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
@@ -85,6 +91,39 @@
 				E3E9779849501B8D90761439 /* Pods_Breaking_Bad_API.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C409985B24E934B1007F22CE /* Characters */ = {
+			isa = PBXGroup;
+			children = (
+				C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */,
+				C4AA6D4324DD17A0009585E0 /* CharacterCell.swift */,
+			);
+			path = Characters;
+			sourceTree = "<group>";
+		};
+		C409985C24E934B6007F22CE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C449277324DFE6D300D5720D /* ProfileHeader.swift */,
+				C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		C409985D24E934BB007F22CE /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C409986624E988A5007F22CE /* SettingCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C409985E24E934BF007F22CE /* Favorite Quotes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Favorite Quotes";
 			sourceTree = "<group>";
 		};
 		C409B68E24E5AF4D009D6A41 /* Character API */ = {
@@ -171,11 +210,10 @@
 		C4F741FB24DD116000EBD638 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */,
-				C4AA6D4324DD17A0009585E0 /* CharacterCell.swift */,
-				C449277324DFE6D300D5720D /* ProfileHeader.swift */,
-				C40F1EC024DFF79700AAD8F7 /* ProfileInfoCell.swift */,
-				C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */,
+				C409985E24E934BF007F22CE /* Favorite Quotes */,
+				C409985D24E934BB007F22CE /* Settings */,
+				C409985C24E934B6007F22CE /* Profile */,
+				C409985B24E934B1007F22CE /* Characters */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,8 +221,11 @@
 		C4F741FC24DD116400EBD638 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C409986424E9364A007F22CE /* MainTabBarController.swift */,
 				C4F741FD24DD11D100EBD638 /* CharactersController.swift */,
 				C40F1EBE24DFECBB00AAD8F7 /* ProfileController.swift */,
+				C409986224E93600007F22CE /* FavoritesController.swift */,
+				C409986024E935EF007F22CE /* SettingsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -303,19 +344,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C409986124E935EF007F22CE /* SettingsController.swift in Sources */,
 				C498017B24DD8B750071A81D /* Character.swift in Sources */,
+				C409986524E9364A007F22CE /* MainTabBarController.swift in Sources */,
 				C409B69324E5AF9E009D6A41 /* QuoteAPI.swift in Sources */,
 				C449277424DFE6D300D5720D /* ProfileHeader.swift in Sources */,
 				C409B69124E5AF80009D6A41 /* QuoteData.swift in Sources */,
 				C409B69524E5B0CC009D6A41 /* Quote.swift in Sources */,
 				C4F741FE24DD11D100EBD638 /* CharactersController.swift in Sources */,
-				C40F1EC124DFF79700AAD8F7 /* ProfileInfoCell.swift in Sources */,
 				C40F1EC324E0684500AAD8F7 /* ProfileQuoteCell.swift in Sources */,
 				C40F1EC524E07C7900AAD8F7 /* CharacterProperty.swift in Sources */,
 				C4F741E424DD0E5100EBD638 /* AppDelegate.swift in Sources */,
 				C4AA6D4024DD15BA009585E0 /* Extentions.swift in Sources */,
 				C4AA6D4424DD17A0009585E0 /* CharacterCell.swift in Sources */,
 				C4F741E624DD0E5100EBD638 /* SceneDelegate.swift in Sources */,
+				C409986724E988A5007F22CE /* SettingCell.swift in Sources */,
+				C409986324E93601007F22CE /* FavoritesController.swift in Sources */,
 				C498017E24DD8CAC0071A81D /* CharacterData.swift in Sources */,
 				C4F741EE24DD0E5100EBD638 /* Breaking_Bad_API.xcdatamodeld in Sources */,
 				C498018024DD8CC10071A81D /* CharacterAPI.swift in Sources */,

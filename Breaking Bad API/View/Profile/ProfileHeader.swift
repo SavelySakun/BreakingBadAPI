@@ -64,11 +64,11 @@ public class ProfileHeader: UIView {
     func configureUI() {
         
         addSubview(view)
-        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 40)
         
         view.addSubview(profileImageView)
         profileImageView.setHeight(height: 200)
-        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 100, paddingRight: 100)
+        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 100, paddingRight: 100)
         
         
         let nameAndNickStack = UIStackView(arrangedSubviews: [nameLabel, nicknameLabel])

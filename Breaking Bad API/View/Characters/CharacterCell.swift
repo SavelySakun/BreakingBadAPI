@@ -12,6 +12,8 @@ import UIImageViewAlignedSwift
 class CharacterCell: UITableViewCell {
     
     // MARK: - Properties
+    let cellReuseIdentifier = "CharacterCell"
+    
     let characterImageView: UIImageViewAligned = {
         let iv = UIImageViewAligned()
         iv.contentMode = .scaleAspectFill

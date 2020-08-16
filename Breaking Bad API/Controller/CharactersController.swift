@@ -39,15 +39,23 @@ class CharactersController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        configureUI()
         
+        configureUI()
     }
+   
     
     // MARK: - Selectors
     
     // MARK: - Helpers
     func configureUI() {
+        
+        // Design setup.
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Characters"
+        
+        view.backgroundColor = .white
+        view.addSubview(tableView)
         
         fetchDataFromAPI()
         configureTableViewUI()
@@ -75,16 +83,11 @@ class CharactersController: UIViewController {
     
     func configureTableViewUI() {
         
-        // Design setup.
-        title = "Characters"
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        
         tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = .white
         tableView.frame = view.frame
         tableView.rowHeight = 80
-        tableView.register(CharacterCell.self, forCellReuseIdentifier: K.cells.characterCell)
+        tableView.register(CharacterCell.self, forCellReuseIdentifier: CharacterCell().cellReuseIdentifier)
         
         // Shows separator only for existing cells.
         tableView.tableFooterView = UIView()
@@ -126,7 +129,7 @@ extension CharactersController: UITableViewDataSource {
     // Cells setup.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.characterCell, for: indexPath) as! CharacterCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CharacterCell().cellReuseIdentifier, for: indexPath) as! CharacterCell
         
         cell.accessoryType = .disclosureIndicator
         
@@ -162,6 +165,7 @@ extension CharactersController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let index = indexPath.row
+                
         let vc = ProfileController()
         vc.selectedCharacter = characters[index]
         navigationController?.pushViewController(vc, animated: true)
