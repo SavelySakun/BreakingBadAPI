@@ -19,6 +19,7 @@
 		C40F1EC324E0684500AAD8F7 /* ProfileQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */; };
 		C40F1EC524E07C7900AAD8F7 /* CharacterProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */; };
 		C449277424DFE6D300D5720D /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449277324DFE6D300D5720D /* ProfileHeader.swift */; };
+		C44F7AC024EA3F770090ADD4 /* FavoriteQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44F7ABF24EA3F770090ADD4 /* FavoriteQuoteCell.swift */; };
 		C498017B24DD8B750071A81D /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017A24DD8B750071A81D /* Character.swift */; };
 		C498017E24DD8CAC0071A81D /* CharacterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017D24DD8CAC0071A81D /* CharacterData.swift */; };
 		C498018024DD8CC10071A81D /* CharacterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498017F24DD8CC10071A81D /* CharacterAPI.swift */; };
@@ -47,6 +48,7 @@
 		C40F1EC224E0684500AAD8F7 /* ProfileQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileQuoteCell.swift; sourceTree = "<group>"; };
 		C40F1EC424E07C7900AAD8F7 /* CharacterProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterProperty.swift; sourceTree = "<group>"; };
 		C449277324DFE6D300D5720D /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		C44F7ABF24EA3F770090ADD4 /* FavoriteQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteQuoteCell.swift; sourceTree = "<group>"; };
 		C498017A24DD8B750071A81D /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		C498017D24DD8CAC0071A81D /* CharacterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterData.swift; sourceTree = "<group>"; };
 		C498017F24DD8CC10071A81D /* CharacterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAPI.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		C409985E24E934BF007F22CE /* Favorite Quotes */ = {
 			isa = PBXGroup;
 			children = (
+				C44F7ABF24EA3F770090ADD4 /* FavoriteQuoteCell.swift */,
 			);
 			path = "Favorite Quotes";
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				C4AA6D4024DD15BA009585E0 /* Extentions.swift in Sources */,
 				C4AA6D4424DD17A0009585E0 /* CharacterCell.swift in Sources */,
 				C4F741E624DD0E5100EBD638 /* SceneDelegate.swift in Sources */,
+				C44F7AC024EA3F770090ADD4 /* FavoriteQuoteCell.swift in Sources */,
 				C409986724E988A5007F22CE /* SettingCell.swift in Sources */,
 				C409986324E93601007F22CE /* FavoritesController.swift in Sources */,
 				C498017E24DD8CAC0071A81D /* CharacterData.swift in Sources */,

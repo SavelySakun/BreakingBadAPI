@@ -49,7 +49,7 @@ extension SettingsController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell().cellReuseIdentifier, for: indexPath) as! SettingCell
         
-        cell.settingLabel.text = "Breaking Bad color theme"
+        cell.settingLabel.text = "Enable Breaking Bad color theme"
         
         return cell
     }
