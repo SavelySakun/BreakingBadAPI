@@ -6,13 +6,26 @@
 //  Copyright © 2020 Savely Sakun. All rights reserved.
 //
 // Useful video about search controller - https://www.youtube.com/watch?v=P5ob4TXIK90
+// Great tutorial about Core Data – https://www.raywenderlich.com/7569-getting-started-with-core-data-tutorial
+
+/* TO-DO LIST:
+ – delete all methods and properties with 'ED'
+ 
+ */
 
 import UIKit
 import SDWebImage
+import CoreData
 
 class CharactersController: UIViewController {
     
     // MARK: - Properties
+    
+    // Core Data properties
+    var charactersCoreData: [NSManagedObject] = []
+    var dataForCoreData = [Character]()
+    
+    // TableView
     private let tableView = UITableView()
     var characters = [Character]()
     var characterAPI = CharacterAPI()
@@ -40,13 +53,15 @@ class CharactersController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchDataFromAPI()
         configureUI()
     }
-   
+    
     
     // MARK: - Selectors
     
     // MARK: - Helpers
+    // UI
     func configureUI() {
         
         // Design setup.
@@ -57,7 +72,6 @@ class CharactersController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         
-        fetchDataFromAPI()
         configureTableViewUI()
     }
     
@@ -96,6 +110,60 @@ class CharactersController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    // Core Data methods
+    func getContext() -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
+    
+    func saveToCoreData(charactersData: [Character]) {
+        
+        let managedContext = getContext()
+        let entity = NSEntityDescription.entity(forEntityName: "CharacterCoreData", in: managedContext)!
+        
+        let character = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        // Sets values of characters into NSManagedObject
+        let totalCharacters = charactersData.count - 1
+        
+        for index in stride(from: 0, to: totalCharacters, by: 1) {
+            
+            let charData = charactersData[index]
+            
+            character.setValue(charData.id, forKeyPath: "id")
+            character.setValue(charData.name, forKeyPath: "name")
+            character.setValue(charData.birthday, forKeyPath: "birthday")
+            character.setValue(charData.occupation, forKeyPath: "occupation")
+            character.setValue(charData.img, forKeyPath: "img")
+            character.setValue(charData.status, forKeyPath: "status")
+            character.setValue(charData.nickname, forKeyPath: "nickname")
+            character.setValue(charData.appearance, forKeyPath: "appearance")
+            character.setValue(charData.portrayed, forKeyPath: "portrayed")
+        }
+        
+        
+        do {
+            try managedContext.save()
+            charactersCoreData.append(character) // ED
+        } catch let error as NSError {
+            print("DEBUG. Could not save: \(error.localizedDescription), \(error.userInfo)")
+        }
+    }
+    
+    func retrieveFromCoreData() {
+        
+        let managedContext = getContext()
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "CharacterCoreData")
+        
+        do {
+            charactersCoreData = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
 }
 
 // Methods for search bar.
@@ -140,11 +208,12 @@ extension CharactersController: UITableViewDataSource {
         } else {
             currentCharacter = characters[indexPath.row]
         }
-        
+                
         // Fetching data.
         let imageURL = URL(string: currentCharacter.img)
         cell.characterImageView.sd_setImage(with: imageURL)
         cell.nameLabel.text = currentCharacter.name
+        cell.nameLabel.text = currentCharacter.nickname
         cell.nicknameLabel.text = currentCharacter.nickname
         return cell
     }
@@ -161,11 +230,11 @@ extension CharactersController: UISearchResultsUpdating {
 
 // Confugure tap on row.
 extension CharactersController: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let index = indexPath.row
-                
+        
         let vc = ProfileController()
         vc.selectedCharacter = characters[index]
         navigationController?.pushViewController(vc, animated: true)
