@@ -7,7 +7,7 @@
 - В профиль персонажа загружаются его знаменитые цитаты.
 
 Стек используемых технологий: 
-- UIKit,
+- UIKit, без использования Storyboard.
 - Работа с API [Breaking Bad](https://breakingbadapi.com/).
 - Pod: UIImageViewAlignedSwift для выравнивания изображения внутри imageView.
 - Архитектура MVC.
