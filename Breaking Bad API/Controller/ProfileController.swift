@@ -58,7 +58,7 @@ class ProfileController: UITableViewController {
         headerView.statusView.iconImageView.image = #imageLiteral(resourceName: "Death icon")
         headerView.birthdayView.propertyLabel.text = selectedCharacter.birthday
         headerView.actorView.propertyLabel.text = selectedCharacter.portrayed
-        headerView.actorView.iconImageView.image = #imageLiteral(resourceName: "Actor icon")
+        headerView.actorView.iconImageView.image = UIImage(named: "Actor icon") // Did this because of bug.
         headerView.ocupationView.propertyLabel.text = selectedCharacter.occupation[0]
         headerView.ocupationView.iconImageView.image = #imageLiteral(resourceName: "Work icon")
         
