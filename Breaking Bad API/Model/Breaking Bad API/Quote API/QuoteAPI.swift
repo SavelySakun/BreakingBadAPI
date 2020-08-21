@@ -17,14 +17,13 @@ class QuoteAPI {
     var quotes = [Quote]()
     weak var delegate: QuoteAPIDelegate?
     
+    var firstname = ""
+    var lastname = ""
+    
     func performRequest(author: String) {
         
-        let authorComponents = author.components(separatedBy: " ")
-        let firstname = authorComponents[0]
-        let lastname = authorComponents[1]
+        let url = getURL(forAuthor: author)
         
-        let url = URL(string: "https://www.breakingbadapi.com/api/quote?author=" + firstname + "+" + lastname)!
-                        
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { (data, response, error) in
             
@@ -42,6 +41,22 @@ class QuoteAPI {
         }
         
         task.resume()
+    }
+    
+    // MARK: - Helpers
+    func getURL(forAuthor: String) -> URL {
+        
+        let authorComponents = forAuthor.components(separatedBy: " ")
+            
+        if authorComponents.count == 1 {
+            firstname = authorComponents[0]
+            return URL(string: "https://www.breakingbadapi.com/api/quote?author=" + firstname)!
+        } else {
+            firstname = authorComponents[0]
+            lastname = authorComponents[1]
+            
+            return URL(string: "https://www.breakingbadapi.com/api/quote?author=" + firstname + "+" + lastname)!
+        }
     }
 
 }

@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(QuoteDataCoreData)
-public class QuoteDataCoreData: NSManagedObject {
+public class QuoteCoreData: NSManagedObject {
 
 }

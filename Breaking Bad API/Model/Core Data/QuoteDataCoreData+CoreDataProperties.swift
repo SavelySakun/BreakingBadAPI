@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension QuoteDataCoreData {
+extension QuoteCoreData {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<QuoteDataCoreData> {
-        return NSFetchRequest<QuoteDataCoreData>(entityName: "QuoteDataCoreData")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<QuoteCoreData> {
+        return NSFetchRequest<QuoteCoreData>(entityName: "QuoteDataCoreData")
     }
 
     @NSManaged public var author: String?

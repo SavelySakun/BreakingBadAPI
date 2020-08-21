@@ -12,7 +12,7 @@ class CharacterProperty: UIView {
     
     var iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "Birthday icon")
+        iv.image = #imageLiteral(resourceName: "testIMG")
         iv.setDimensions(height: 30, width: 30)
         return iv
     }()

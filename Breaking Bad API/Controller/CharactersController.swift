@@ -213,7 +213,6 @@ extension CharactersController: UITableViewDataSource {
         let imageURL = URL(string: currentCharacter.img)
         cell.characterImageView.sd_setImage(with: imageURL)
         cell.nameLabel.text = currentCharacter.name
-        cell.nameLabel.text = currentCharacter.nickname
         cell.nicknameLabel.text = currentCharacter.nickname
         return cell
     }
