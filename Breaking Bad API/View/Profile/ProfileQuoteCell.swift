@@ -27,11 +27,12 @@ class ProfileQuoteCell: UITableViewCell {
         return v
     }()
     
-    let favoriteIcon: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage.init(systemName: "star")
-        iv.setDimensions(height: 22, width: 24)
-        return iv
+    let addToFavoriteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        button.setDimensions(height: 22, width: 24)
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -39,13 +40,13 @@ class ProfileQuoteCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(quoteLabel)
-        addSubview(favoriteIcon)
+        addSubview(addToFavoriteButton)
         
-        quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: favoriteIcon.leftAnchor, paddingTop: 25, paddingLeft: 20, paddingBottom: 25, paddingRight: 20)
+        quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: addToFavoriteButton.leftAnchor, paddingTop: 25, paddingLeft: 20, paddingBottom: 25, paddingRight: 20)
         
         
-        favoriteIcon.centerY(inView: quoteLabel)
-        favoriteIcon.anchor(right: rightAnchor, paddingRight: 25)
+        addToFavoriteButton.centerY(inView: quoteLabel)
+        addToFavoriteButton.anchor(right: rightAnchor, paddingRight: 25)
         
         
     }
@@ -55,4 +56,6 @@ class ProfileQuoteCell: UITableViewCell {
     }
     
     // MARK: - Helpers
+   
+    
 }

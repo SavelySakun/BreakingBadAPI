@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 
-class ProfileController: UITableViewController {
+class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     var quotes = [Quote(quoteId: 1, quote: "Loading...", author: "WW")]
@@ -18,13 +18,20 @@ class ProfileController: UITableViewController {
     let headerView = ProfileHeader()    
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
     
+    let cellAccessoryView: UIImageView = {
+        let v = UIImageView()
+        v.sizeToFit()
+        v.image = UIImage(systemName: "star")
+        return v
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         quoteAPI.delegate = self
-        self.quoteAPI.performRequest(author: self.selectedCharacter.name)
+        quoteAPI.performRequest(author: selectedCharacter.name)
                         
         configureUI()
     }
@@ -53,15 +60,10 @@ class ProfileController: UITableViewController {
         
         headerView.nameLabel.text = selectedCharacter.name
         headerView.nicknameLabel.text = selectedCharacter.nickname
-        
         headerView.statusView.propertyLabel.text = selectedCharacter.status
-        headerView.statusView.iconImageView.image = #imageLiteral(resourceName: "death icon")
         headerView.birthdayView.propertyLabel.text = selectedCharacter.birthday
-        headerView.birthdayView.iconImageView.image = #imageLiteral(resourceName: "birthday icon")
         headerView.actorView.propertyLabel.text = selectedCharacter.portrayed
-        headerView.actorView.iconImageView.image = #imageLiteral(resourceName: "actor icon")
         headerView.ocupationView.propertyLabel.text = selectedCharacter.occupation[0]
-        headerView.ocupationView.iconImageView.image = #imageLiteral(resourceName: "work icon")
         
         let avatarImageView: UIImageView = {
             let iv = UIImageView()
@@ -73,15 +75,8 @@ class ProfileController: UITableViewController {
     }
     
     // MARK: - Selectors
-    @objc func addCharacterToFavorites() {
-        let controller = ProfileHeader()
-        
-        
-        tableView.tableHeaderView = controller
-        controller.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.4)
-        
-        tableView.reloadData()
-    }
+    
+    
 }
 
 // MARK: - TableView Setup
@@ -107,6 +102,8 @@ extension ProfileController {
         
         cell.quoteLabel.text = quotes[indexPath.row].quote
         
+        cell.accessoryView = cellAccessoryView
+                
         return cell
     }
     
@@ -116,7 +113,14 @@ extension ProfileController: QuoteAPIDelegate {
     func fetchQuotes(quotesArray: [Quote]) {
         DispatchQueue.main.async {
             self.quotes = quotesArray
-            self.tableView.reloadData()
+            
+            if self.quotes.count == 0 {
+                self.quotes.append(Quote(quoteId: -1, quote: "Can't find any quote.", author: ""))
+                
+                self.tableView.reloadData()
+            } else {
+                self.tableView.reloadData()
+            }
         }
     }
     

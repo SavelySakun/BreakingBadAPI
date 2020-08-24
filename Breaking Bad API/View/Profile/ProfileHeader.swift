@@ -27,7 +27,7 @@ public class ProfileHeader: UIView {
         iv.alignTop = true
         
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .green
+        iv.backgroundColor = .systemGray4
         return iv
     }()
     
@@ -44,6 +44,7 @@ public class ProfileHeader: UIView {
         return label
     }()
     
+    // Icons
     let statusView = CharacterProperty()
     let birthdayView = CharacterProperty()
     let ocupationView = CharacterProperty()
@@ -62,6 +63,8 @@ public class ProfileHeader: UIView {
     
     // MARK: - Helpers
     func configureUI() {
+        
+        configureIcons()
         
         addSubview(view)
         view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 40)
@@ -85,6 +88,13 @@ public class ProfileHeader: UIView {
         
         view.addSubview(propertiesStack)
         propertiesStack.anchor(top: nameAndNickStack.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 60, paddingBottom: 30, paddingRight: 60)
+    }
+    
+    func configureIcons() {
+        birthdayView.iconImageView.image = #imageLiteral(resourceName: "birthday icon")
+        actorView.iconImageView.image = #imageLiteral(resourceName: "actor icon")
+        statusView.iconImageView.image = #imageLiteral(resourceName: "death icon")
+        ocupationView.iconImageView.image = #imageLiteral(resourceName: "work icon")
     }
     
 }

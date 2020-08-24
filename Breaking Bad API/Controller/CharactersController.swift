@@ -20,15 +20,13 @@ import CoreData
 class CharactersController: UIViewController {
     
     // MARK: - Properties
-    
     // Core Data properties
-    var charactersCoreData: [NSManagedObject] = []
-    var dataForCoreData = [Character]()
+    let coreData = CoreData()
     
     // TableView
     private let tableView = UITableView()
     var characters = [Character]()
-    var characterAPI = CharacterAPI()
+    let characterAPI = CharacterAPI()
     
     // Properties for search
     var filteredCharacters = [Character]()
@@ -53,7 +51,9 @@ class CharactersController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchDataFromAPI()
+        coreData.delegate = self
+        coreData.performRequest()
+        
         configureUI()
     }
     
@@ -61,7 +61,6 @@ class CharactersController: UIViewController {
     // MARK: - Selectors
     
     // MARK: - Helpers
-    // UI
     func configureUI() {
         
         // Design setup.
@@ -75,25 +74,6 @@ class CharactersController: UIViewController {
         configureTableViewUI()
     }
     
-    func fetchDataFromAPI() {
-        tableView.isHidden = true // Hides table view while loads.
-        showIndicator(description: nil) // Loading indicator shows.
-        
-        // Fetching data from API.
-        characterAPI.performRequest() { result in
-            switch result {
-            case .success(let data):
-                self.characters = data // Передаю дату по персонажам из API.
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.tableView.isHidden = false
-                    self.dismissIndicator()
-                }
-            case .failure(_):
-                break
-            }
-        }
-    }
     
     func configureTableViewUI() {
         
@@ -109,59 +89,6 @@ class CharactersController: UIViewController {
         // Table View Delegates.
         tableView.delegate = self
         tableView.dataSource = self
-    }
-    
-    // Core Data methods
-    func getContext() -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
-    }
-    
-    func saveToCoreData(charactersData: [Character]) {
-        
-        let managedContext = getContext()
-        let entity = NSEntityDescription.entity(forEntityName: "CharacterCoreData", in: managedContext)!
-        
-        let character = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        // Sets values of characters into NSManagedObject
-        let totalCharacters = charactersData.count - 1
-        
-        for index in stride(from: 0, to: totalCharacters, by: 1) {
-            
-            let charData = charactersData[index]
-            
-            character.setValue(charData.id, forKeyPath: "id")
-            character.setValue(charData.name, forKeyPath: "name")
-            character.setValue(charData.birthday, forKeyPath: "birthday")
-            character.setValue(charData.occupation, forKeyPath: "occupation")
-            character.setValue(charData.img, forKeyPath: "img")
-            character.setValue(charData.status, forKeyPath: "status")
-            character.setValue(charData.nickname, forKeyPath: "nickname")
-            character.setValue(charData.appearance, forKeyPath: "appearance")
-            character.setValue(charData.portrayed, forKeyPath: "portrayed")
-        }
-        
-        
-        do {
-            try managedContext.save()
-            charactersCoreData.append(character) // ED
-        } catch let error as NSError {
-            print("DEBUG. Could not save: \(error.localizedDescription), \(error.userInfo)")
-        }
-    }
-    
-    func retrieveFromCoreData() {
-        
-        let managedContext = getContext()
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "CharacterCoreData")
-        
-        do {
-            charactersCoreData = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
     }
     
 }
@@ -208,7 +135,7 @@ extension CharactersController: UITableViewDataSource {
         } else {
             currentCharacter = characters[indexPath.row]
         }
-                
+        
         // Fetching data.
         let imageURL = URL(string: currentCharacter.img)
         cell.characterImageView.sd_setImage(with: imageURL)
@@ -237,6 +164,16 @@ extension CharactersController: UITableViewDelegate {
         let vc = ProfileController()
         vc.selectedCharacter = characters[index]
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// Fetching characters array from Core Data.
+extension CharactersController: CoreDataDelegate {
+    func fetchCharacters(charactersFromCoreData: [Character]) {
+        
+        characters = charactersFromCoreData
+        tableView.reloadData()
+        
     }
 }
 
