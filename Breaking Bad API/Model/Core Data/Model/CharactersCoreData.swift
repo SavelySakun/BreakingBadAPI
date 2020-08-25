@@ -9,18 +9,18 @@
 import UIKit
 import CoreData
 
-protocol CoreDataDelegate: class {
+protocol CharactersCoreDataDelegate: class {
     func fetchCharacters(charactersFromCoreData: [Character])
 }
 
-class CoreData {
+class CharactersCoreData {
     
     // MARK: - Properties
     let characterAPI = CharacterAPI()
     var charactersCoreData: [NSManagedObject] = []
     var characters = [Character]()
     
-    weak var delegate: CoreDataDelegate?
+    weak var delegate: CharactersCoreDataDelegate?
     
     // MARK: - Methods
     func performRequest() {

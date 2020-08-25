@@ -34,7 +34,7 @@ class QuoteAPI {
             let totalQuotes = data.count - 1
             
             for index in stride(from: 0, to: totalQuotes, by: 1) {
-                self.quotes.append(Quote(quoteId: data[index].quote_id, quote: data[index].quote, author: data[index].author))
+                self.quotes.append(Quote(id: data[index].quote_id, text: data[index].quote, author: data[index].author))
             }
             
             self.delegate?.fetchQuotes(quotesArray: self.quotes)

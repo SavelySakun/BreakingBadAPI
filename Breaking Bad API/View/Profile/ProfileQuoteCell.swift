@@ -27,13 +27,7 @@ class ProfileQuoteCell: UITableViewCell {
         return v
     }()
     
-    let addToFavoriteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.setImage(UIImage(systemName: "star.fill"), for: .selected)
-        button.setDimensions(height: 22, width: 24)
-        return button
-    }()
+    let addToFavoriteButton = AddToFavoriteButton()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,7 +35,7 @@ class ProfileQuoteCell: UITableViewCell {
         
         addSubview(quoteLabel)
         addSubview(addToFavoriteButton)
-        
+                
         quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: addToFavoriteButton.leftAnchor, paddingTop: 25, paddingLeft: 20, paddingBottom: 25, paddingRight: 20)
         
         

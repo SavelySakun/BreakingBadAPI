@@ -21,7 +21,7 @@ class CharactersController: UIViewController {
     
     // MARK: - Properties
     // Core Data properties
-    let coreData = CoreData()
+    let charactersCoreData = CharactersCoreData()
     
     // TableView
     private let tableView = UITableView()
@@ -51,8 +51,8 @@ class CharactersController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coreData.delegate = self
-        coreData.performRequest()
+        charactersCoreData.delegate = self
+        charactersCoreData.performRequest()
         
         configureUI()
     }
@@ -168,7 +168,7 @@ extension CharactersController: UITableViewDelegate {
 }
 
 // Fetching characters array from Core Data.
-extension CharactersController: CoreDataDelegate {
+extension CharactersController: CharactersCoreDataDelegate {
     func fetchCharacters(charactersFromCoreData: [Character]) {
         
         characters = charactersFromCoreData

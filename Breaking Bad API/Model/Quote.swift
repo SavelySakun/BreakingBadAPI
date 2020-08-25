@@ -10,7 +10,7 @@ import Foundation
 
 struct Quote {
     
-	let quoteId: Int
-	let quote: String
+	let id: Int
+	let text: String
 	let author: String
 }

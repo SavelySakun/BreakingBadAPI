@@ -13,17 +13,14 @@ import SDWebImage
 class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    var quotes = [Quote(quoteId: 1, quote: "Loading...", author: "WW")]
+    // Core Data properties
+    let quotesCoreData = QuotesCoreData()
+    
+    var quotes = [Quote(id: 1, text: "Loading...", author: "WW")]
     var quoteAPI = QuoteAPI()
     let headerView = ProfileHeader()    
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
-    
-    let cellAccessoryView: UIImageView = {
-        let v = UIImageView()
-        v.sizeToFit()
-        v.image = UIImage(systemName: "star")
-        return v
-    }()
+
     
     // MARK: - Lifecycle
     
@@ -75,7 +72,19 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Selectors
-    
+    @objc func addToFavorite(sender: UIButton) {
+        
+        let cellNumber = sender.tag
+        
+        // How to reach cell in tableView
+        let indexPath = IndexPath(row: cellNumber, section: 0)
+        let cell = tableView.cellForRow(at: indexPath) as! ProfileQuoteCell
+        
+        let buttonStatus = cell.addToFavoriteButton.isSelected
+        cell.addToFavoriteButton.changeButtonImage(buttonSelected: buttonStatus)
+        
+        quotesCoreData.save(selectedQuote: quotes[cellNumber])
+    }
     
 }
 
@@ -100,10 +109,13 @@ extension ProfileController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
         
-        cell.quoteLabel.text = quotes[indexPath.row].quote
         
-        cell.accessoryView = cellAccessoryView
-                
+        cell.addToFavoriteButton.tag = indexPath.row
+        
+        cell.quoteLabel.text = quotes[indexPath.row].text
+        
+        cell.addToFavoriteButton.addTarget(self, action: #selector(addToFavorite(sender:)), for: .touchUpInside)
+      
         return cell
     }
     
@@ -115,7 +127,7 @@ extension ProfileController: QuoteAPIDelegate {
             self.quotes = quotesArray
             
             if self.quotes.count == 0 {
-                self.quotes.append(Quote(quoteId: -1, quote: "Can't find any quote.", author: ""))
+                self.quotes.append(Quote(id: -1, text: "Can't find any quote.", author: ""))
                 
                 self.tableView.reloadData()
             } else {

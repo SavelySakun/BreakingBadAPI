@@ -13,8 +13,8 @@
     </entity>
     <entity name="QuoteCoreData" representedClassName="QuoteCoreData" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
-        <attribute name="quote" optional="YES" attributeType="String"/>
-        <attribute name="quoteId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="CharacterCoreData" positionX="-63" positionY="-18" width="128" height="178"/>
