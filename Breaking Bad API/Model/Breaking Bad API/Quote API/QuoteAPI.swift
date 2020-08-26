@@ -20,7 +20,7 @@ class QuoteAPI {
     var firstname = ""
     var lastname = ""
     
-    func performRequest(author: String) {
+    func performRequest(author: String, completionHandler: @escaping (Result<[Quote], Error>) -> Void) {
         
         let url = getURL(forAuthor: author)
         
@@ -37,6 +37,9 @@ class QuoteAPI {
                 self.quotes.append(Quote(id: data[index].quote_id, text: data[index].quote, author: data[index].author))
             }
             
+            completionHandler(.success(self.quotes))
+            
+            // DELETE later:
             self.delegate?.fetchQuotes(quotesArray: self.quotes)
         }
         

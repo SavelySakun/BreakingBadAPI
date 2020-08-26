@@ -36,7 +36,6 @@ class CharacterAPI {
             completionHandler(.success(self.characters))
             
     }
-        
         task.resume()
     }
 

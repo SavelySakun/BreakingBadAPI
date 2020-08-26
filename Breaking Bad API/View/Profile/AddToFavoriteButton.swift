@@ -16,7 +16,7 @@ class AddToFavoriteButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        setImage(UIImage(systemName: "star"), for: .normal)
+        setImage(UIImage(systemName: "heart"), for: .normal)
         
         imageView?.setDimensions(height: 27, width: 30)
         setDimensions(height: 27, width: 30)
@@ -30,10 +30,12 @@ class AddToFavoriteButton: UIButton {
     // MARK: - Helpers
     func changeButtonImage(buttonSelected: Bool) {
         if buttonSelected {
-            setImage(UIImage(systemName: "star"), for: .normal)
+            setImage(UIImage(systemName: "heart"), for: .normal)
+            imageView?.tintColor = .systemBlue
             isSelected = false
         } else {
-            setImage(UIImage(systemName: "star.fill"), for: .selected)
+            setImage(UIImage(systemName: "heart.fill"), for: .selected)
+            imageView?.tintColor = .systemRed
             isSelected = true
         }
     }

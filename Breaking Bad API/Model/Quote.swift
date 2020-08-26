@@ -13,4 +13,5 @@ struct Quote {
 	let id: Int
 	let text: String
 	let author: String
+    var isSavedToFavorites: Bool?
 }

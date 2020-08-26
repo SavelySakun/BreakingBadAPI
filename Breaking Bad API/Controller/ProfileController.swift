@@ -27,10 +27,13 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        quoteAPI.delegate = self
-        quoteAPI.performRequest(author: selectedCharacter.name)
+        
+        // Quotes Core Data
+        quotesCoreData.delegate = self
+        quotesCoreData.retrieveQuotes(of: selectedCharacter.name)
                         
         configureUI()
+    
     }
     
     // MARK: - Helpers
@@ -80,10 +83,21 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         let indexPath = IndexPath(row: cellNumber, section: 0)
         let cell = tableView.cellForRow(at: indexPath) as! ProfileQuoteCell
         
+        let quoteId = quotes[cellNumber].id
+        let quoteSavedStatus = quotes[cellNumber].isSavedToFavorites
+        
         let buttonStatus = cell.addToFavoriteButton.isSelected
         cell.addToFavoriteButton.changeButtonImage(buttonSelected: buttonStatus)
         
-        quotesCoreData.save(selectedQuote: quotes[cellNumber])
+        quotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, currentStatus: quoteSavedStatus!)
+        
+        if quoteSavedStatus! {
+            quotes[cellNumber].isSavedToFavorites = false
+        } else {
+            quotes[cellNumber].isSavedToFavorites = true
+        }
+        
+        tableView.reloadData()
     }
     
 }
@@ -108,7 +122,12 @@ extension ProfileController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
-        
+                
+        if quotes[indexPath.row].isSavedToFavorites ?? false {
+            cell.addToFavoriteButton.isSelected = true
+            cell.addToFavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+            cell.addToFavoriteButton.imageView?.tintColor = .systemRed
+        }
         
         cell.addToFavoriteButton.tag = indexPath.row
         
@@ -121,10 +140,11 @@ extension ProfileController {
     
 }
 
-extension ProfileController: QuoteAPIDelegate {
-    func fetchQuotes(quotesArray: [Quote]) {
+extension ProfileController: QuotesCoreDataDelegate {
+    
+    func fetchQuotes(quotesFromAPI: [Quote]) {
         DispatchQueue.main.async {
-            self.quotes = quotesArray
+            self.quotes = quotesFromAPI
             
             if self.quotes.count == 0 {
                 self.quotes.append(Quote(id: -1, text: "Can't find any quote.", author: ""))
@@ -135,6 +155,4 @@ extension ProfileController: QuoteAPIDelegate {
             }
         }
     }
-    
-    
 }

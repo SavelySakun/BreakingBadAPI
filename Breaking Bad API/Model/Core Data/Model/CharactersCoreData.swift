@@ -16,17 +16,17 @@ protocol CharactersCoreDataDelegate: class {
 class CharactersCoreData {
     
     // MARK: - Properties
-    let characterAPI = CharacterAPI()
     var charactersCoreData: [NSManagedObject] = []
     var characters = [Character]()
+    let characterAPI = CharacterAPI()
     
     weak var delegate: CharactersCoreDataDelegate?
     
     // MARK: - Methods
-    func performRequest() {
-        print(#function)
+    func retrieveCharacters() {
         
-        if entityIsEmpty() {
+        
+        if checkSavedDataAndRetriveIfItsNotEmpty() {
             characterAPI.performRequest { result in
                 switch result {
                 case .success(let data):
@@ -47,7 +47,6 @@ class CharactersCoreData {
     }
     
     func saveCoreData(charactersData: [Character]) {
-        print(#function)
         
         let managedContext = getContext()
         
@@ -79,7 +78,6 @@ class CharactersCoreData {
     }
     
     func retrieveFromCoreData() {
-        print(#function)
         
         let managedContext = getContext()
         let fetchRequest =
@@ -93,7 +91,7 @@ class CharactersCoreData {
             for index in stride(from: 0, to: totalCharacters, by: 1) {
                 
                 let character = charactersCoreData[index]
-                self.characters.append(Character(
+                characters.append(Character(
                     
                     id: character.value(forKey: "id") as! Int,
                     name: character.value(forKey: "name") as! String,
@@ -112,7 +110,7 @@ class CharactersCoreData {
         delegate?.fetchCharacters(charactersFromCoreData: characters)
     }
     
-    func entityIsEmpty() -> Bool {
+    func checkSavedDataAndRetriveIfItsNotEmpty() -> Bool {
         
         let managedContext = getContext()
         let fetchRequest =

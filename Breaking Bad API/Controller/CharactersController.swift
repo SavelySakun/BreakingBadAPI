@@ -52,7 +52,7 @@ class CharactersController: UIViewController {
         super.viewDidLoad()
         
         charactersCoreData.delegate = self
-        charactersCoreData.performRequest()
+        charactersCoreData.retrieveCharacters()
         
         configureUI()
     }
