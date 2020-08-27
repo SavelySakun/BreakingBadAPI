@@ -16,7 +16,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     // Core Data properties
     let quotesCoreData = QuotesCoreData()
     
-    var quotes = [Quote(id: 1, text: "Loading...", author: "WW")]
+    var quotes = [Quote(id: 0, text: "loading...", author: "...", isSavedToFavorites: false, authorImg: "")]
     var quoteAPI = QuoteAPI()
     let headerView = ProfileHeader()    
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
@@ -39,7 +39,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     // MARK: - Helpers
     func configureUI() {
         
-        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInsetAdjustmentBehavior = .never // TODO: Delete and fix tapbar bug.
         
         tableViewSetup()
     }
@@ -89,7 +89,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         let buttonStatus = cell.addToFavoriteButton.isSelected
         cell.addToFavoriteButton.changeButtonImage(buttonSelected: buttonStatus)
         
-        quotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, currentStatus: quoteSavedStatus!)
+        quotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, authorImg: selectedCharacter.img, currentFavoriteStatus: quoteSavedStatus!)
         
         if quoteSavedStatus! {
             quotes[cellNumber].isSavedToFavorites = false

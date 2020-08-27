@@ -37,7 +37,7 @@ class FavoriteQuoteCell: UITableViewCell {
         iv.alignTop = true
         
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .green
+        iv.backgroundColor = .systemGray5
         return iv
     }()
     

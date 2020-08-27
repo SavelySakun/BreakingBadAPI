@@ -14,4 +14,5 @@ struct Quote {
 	let text: String
 	let author: String
     var isSavedToFavorites: Bool?
+    var authorImg: String?
 }
