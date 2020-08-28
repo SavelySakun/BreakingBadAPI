@@ -25,15 +25,39 @@ class QuotesCoreData {
     weak var delegate: QuotesCoreDataDelegate?
     
     // MARK: - Methods
-    func retrieveQuotes(of author: String) {
+    func checkIsThereAnySavedQuotesToCoreData(author: String) -> Bool {
+        let managedContext = getContext()
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "QuoteCoreData")
+        
+        let predicate = NSPredicate(format: "author = %@", "\(author)")
+        fetchRequest.predicate = predicate // Filter by selected author name.
+        
+        do {
+            quotesCoreData = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        if quotesCoreData.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func retrieveQuotes(of author: String, completionHandler: @escaping (Result<[Quote], Error>) -> Void) {
         
         if checkSavedDataAndRetriveIfItsNotEmpty(author: author) {
             quoteAPI.performRequest(author: author) { result in
                 switch result {
                 case .success(let data):
                     DispatchQueue.main.async {
+                        
                         self.saveQuotesFromAPIToCoreData(quotesData: data)
-                        self.retrieveQuotesFromCoreData(of: author)
+                        let dataForCompletion = self.retrieveQuotesFromCoreData(of: author)
+                        
+                        completionHandler(.success(dataForCompletion))
                     }
                 case .failure(_):
                     break
@@ -51,7 +75,7 @@ class QuotesCoreData {
         
         let managedContext = getContext()
         
-        let totalQuotes = quotesData.count - 1
+        let totalQuotes = quotesData.count
         
         for index in stride(from: 0, to: totalQuotes, by: 1) {
             
@@ -71,7 +95,7 @@ class QuotesCoreData {
         }
     }
     
-    func retrieveQuotesFromCoreData(of author: String) {
+    func retrieveQuotesFromCoreData(of author: String) -> [Quote] {
         let managedContext = getContext()
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "QuoteCoreData")
@@ -82,7 +106,7 @@ class QuotesCoreData {
         do {
             quotesCoreData = try managedContext.fetch(fetchRequest)
             
-            let totalQuotes = quotesCoreData.count - 1
+            let totalQuotes = quotesCoreData.count
             
             for index in stride(from: 0, to: totalQuotes, by: 1) {
                 
@@ -100,7 +124,7 @@ class QuotesCoreData {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        delegate?.fetchQuotes(quotesFromAPI: quotes)
+        return quotes
     }
     
     func checkSavedDataAndRetriveIfItsNotEmpty(author: String) -> Bool {
@@ -124,9 +148,12 @@ class QuotesCoreData {
             retrieveQuotesFromCoreData(of: author)
             return false
         }
+        
+        
     }
     
     func updateIsSavedToFavorites(quoteId: Int, authorImg: String, currentFavoriteStatus: Bool) {
+        print("\(#function)")
         let managedContext = getContext()
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "QuoteCoreData")
@@ -152,9 +179,10 @@ class QuotesCoreData {
         } catch let error as NSError {
             print("Could not save: \(error.localizedDescription), \(error.userInfo)")
         }
+        
     }
     
-    func retrieveFavoritesQuote(completionHandler: @escaping (Result<[Quote], Error>) -> Void) {
+    func retrieveFavoritesQuotes(completionHandler: @escaping (Result<[Quote], Error>) -> Void) {
         let managedContext = getContext()
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "QuoteCoreData")
@@ -164,7 +192,7 @@ class QuotesCoreData {
         
         do {
             quotesCoreData = try managedContext.fetch(fetchRequest)
-            let totalQuotes = quotesCoreData.count - 1
+            let totalQuotes = quotesCoreData.count
                         
             for index in stride(from: 0, to: totalQuotes, by: 1) {
                 let quote = quotesCoreData[index]
@@ -176,12 +204,11 @@ class QuotesCoreData {
                     isSavedToFavorites: quote.value(forKey: "isSavedToFavorites") as? Bool,
                     authorImg: quote.value(forKey: "img") as? String))
             }
-            print("CORE DATA: quotesCoreData.count in do block: \(quotesCoreData.count)")
-            print("CORE DATA: quotes.count in do block: \(quotes.count)")
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        print("CORE DATA: quotes.count - completion handler: \(quotes.count)")
+        
         completionHandler(.success(self.quotes))
         quotes = [Quote]()
     }

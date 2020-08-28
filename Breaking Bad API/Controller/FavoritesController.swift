@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class FavoritesController: UIViewController {
     
     // MARK: - Properties
@@ -17,28 +18,14 @@ class FavoritesController: UIViewController {
     let quotesCoreData = QuotesCoreData()
 
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        quotesCoreData.retrieveFavoritesQuote() { result in
-            switch result {
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.quotes = data
-                    
-                    print("DEBUG: data.count from \(#function): \(data.count)")
-                    self.tableView.reloadData()
-                }
-            case .failure(_):
-                break
-            }
-        }
+        fetchDataToTableView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         configureUI()
     }
@@ -59,6 +46,40 @@ class FavoritesController: UIViewController {
         tableView.dataSource = self
         tableView.register(FavoriteQuoteCell.self, forCellReuseIdentifier: FavoriteQuoteCell().cellReuseIdentifier)
     }
+    
+    func fetchDataToTableView() {
+        print("\(#function)")
+        quotesCoreData.retrieveFavoritesQuotes() { result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self.quotes = data
+                    self.tableView.reloadData()
+                }
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    // MARK: - Selectors
+    @objc func addToFavorite(sender: UIButton) {
+        
+        let cellNumber = sender.tag
+        
+        // How to reach cell in tableView
+        let indexPath = IndexPath(row: cellNumber, section: 0)
+        let cell = tableView.cellForRow(at: indexPath) as! FavoriteQuoteCell
+        
+        let quoteId = quotes[cellNumber].id
+        let quoteSavedStatus = quotes[cellNumber].isSavedToFavorites
+        
+        let authorImg = quotes[cellNumber].authorImg!
+        
+        quotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, authorImg: authorImg, currentFavoriteStatus: quoteSavedStatus!)
+        
+        fetchDataToTableView()
+    }
 
 }
 
@@ -72,15 +93,10 @@ extension FavoritesController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteQuoteCell().cellReuseIdentifier, for: indexPath) as! FavoriteQuoteCell
         
         var quote = quotes[indexPath.row]
-        
-        print("QUOTES COUNT: \(quotes.count)")
-        //print("DEBUG: quote text from \(#function): \(quote.text)")
-        
+                
         cell.nameLabel.text = quote.author
         cell.quoteLabel.text = quote.text
-        
-        print(quote.author)
-        
+                
         if quote.author == "Jesse Pinkman" {
             quote.authorImg = "https://vignette.wikia.nocookie.net/breakingbad/images/5/57/151015113000_660871736.jpeg/revision/latest?cb=20161221212557"
         }
@@ -91,6 +107,8 @@ extension FavoritesController: UITableViewDataSource {
             iv.sd_setImage(with: imageURL)
             return iv
         }()
+        
+        cell.deleteButton.addTarget(self, action: #selector(addToFavorite(sender:)), for: .touchUpInside)
 
         cell.characterImageView.image = avatarImageView.image
         

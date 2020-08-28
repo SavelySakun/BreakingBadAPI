@@ -51,7 +51,7 @@ class CharactersCoreData {
         let managedContext = getContext()
         
         // Sets values of characters into NSManagedObject
-        let totalCharacters = charactersData.count - 1
+        let totalCharacters = charactersData.count
         
         for index in stride(from: 0, to: totalCharacters, by: 1) {
             
@@ -86,7 +86,7 @@ class CharactersCoreData {
         do {
             charactersCoreData = try managedContext.fetch(fetchRequest)
             
-            let totalCharacters = charactersCoreData.count - 1
+            let totalCharacters = charactersCoreData.count
             
             for index in stride(from: 0, to: totalCharacters, by: 1) {
                 

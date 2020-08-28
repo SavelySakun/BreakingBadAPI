@@ -41,6 +41,14 @@ class FavoriteQuoteCell: UITableViewCell {
         return iv
     }()
     
+    let deleteButton: UIButton = {
+        let b = UIButton()
+        b.setDimensions(height: 24, width: 24)
+        b.setImage(UIImage(systemName: "trash"), for: .normal)
+        b.tintColor = .systemRed
+        return b
+    }()
+    
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -49,16 +57,24 @@ class FavoriteQuoteCell: UITableViewCell {
     
         addSubview(characterImageView)
         
-        characterImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 10, paddingLeft: 20)
+        characterImageView.anchor(left: leftAnchor, paddingLeft: 20)
         characterImageView.setDimensions(height: 45, width: 45)
         characterImageView.layer.cornerRadius = 45 / 2
         
-        addSubview(nameLabel)
-        nameLabel.anchor(top: topAnchor, left: characterImageView.rightAnchor, paddingTop: 10, paddingLeft: 10)
         
-        addSubview(quoteLabel)
+        let stack = UIStackView(arrangedSubviews: [nameLabel, quoteLabel])
+        
         quoteLabel.numberOfLines = 0
-        quoteLabel.anchor(top: nameLabel.bottomAnchor, left: characterImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 10, paddingRight: 15)
+        
+        addSubview(stack)
+        stack.axis = .vertical
+        stack.spacing = 5
+        stack.centerY(inView: characterImageView)
+        stack.anchor(top: topAnchor, left: characterImageView.rightAnchor, bottom: bottomAnchor, paddingTop: 15, paddingLeft: 15, paddingBottom: 15)
+        
+        addSubview(deleteButton)
+        deleteButton.centerY(inView: stack)
+        deleteButton.anchor(left: stack.rightAnchor, right: rightAnchor, paddingLeft: 15, paddingRight: 20)
         
         
         
