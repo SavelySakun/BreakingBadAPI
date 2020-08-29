@@ -23,11 +23,9 @@ class MainTabBarController: UITabBarController {
         charactersController.navigationItem.title = "Characters"
         
         let favoritesController = createNavigationController(vc: FavoritesController(), image: UIImage(systemName: "heart.circle.fill"), tabBarTitle: "Favorite Quotes")
+    
         
-        
-        let settingsController = createNavigationController(vc: SettingsController(), image: UIImage(systemName: "gear"), tabBarTitle: "Settings")
-        
-        viewControllers = [charactersController, favoritesController, settingsController]
+        viewControllers = [charactersController, favoritesController]
         
     }
 

@@ -35,14 +35,13 @@ class ProfileQuoteCell: UITableViewCell {
         
         addSubview(quoteLabel)
         addSubview(addToFavoriteButton)
+        
                 
         quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: addToFavoriteButton.leftAnchor, paddingTop: 25, paddingLeft: 20, paddingBottom: 25, paddingRight: 20)
         
         
         addToFavoriteButton.centerY(inView: quoteLabel)
         addToFavoriteButton.anchor(right: rightAnchor, paddingRight: 25)
-        
-        
     }
     
     required init?(coder: NSCoder) {

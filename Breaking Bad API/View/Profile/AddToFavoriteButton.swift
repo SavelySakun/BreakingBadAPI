@@ -28,15 +28,13 @@ class AddToFavoriteButton: UIButton {
     }
     
     // MARK: - Helpers
-    func changeButtonImage(buttonSelected: Bool) {
-        if buttonSelected {
+    func changeButtonImage(quoteInFavorites: Bool) {
+        if quoteInFavorites {
             setImage(UIImage(systemName: "heart"), for: .normal)
             imageView?.tintColor = .systemBlue
-            isSelected = false
         } else {
-            setImage(UIImage(systemName: "heart.fill"), for: .selected)
+            setImage(UIImage(systemName: "heart.fill"), for: .normal)
             imageView?.tintColor = .systemRed
-            isSelected = true
         }
     }
 

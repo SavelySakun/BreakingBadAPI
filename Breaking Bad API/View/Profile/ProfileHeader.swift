@@ -22,6 +22,7 @@ public class ProfileHeader: UIView {
     let profileImageView: UIImageViewAligned = {
         let iv = UIImageViewAligned()
         
+        iv.image = UIImage(systemName: "person")
         iv.layer.cornerRadius = 200 / 2
         iv.clipsToBounds = true
         iv.alignTop = true
@@ -64,10 +65,12 @@ public class ProfileHeader: UIView {
     // MARK: - Helpers
     func configureUI() {
         
+        //view.backgroundColor = .systemPink
+        
         configureIcons()
         
         addSubview(view)
-        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 40)
+        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0)
         
         view.addSubview(profileImageView)
         profileImageView.setHeight(height: 200)

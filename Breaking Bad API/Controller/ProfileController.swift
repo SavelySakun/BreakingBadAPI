@@ -13,10 +13,14 @@ import SDWebImage
 class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
+    
+    var numberOfReloads = 0
+    
     // Core Data properties
     let quotesCoreData = QuotesCoreData()
+    let favoriteQuotesCoreData = FavoriteQuoteCoreData()
     
-    var quotes = [Quote(id: 0, text: "Loading...", author: "...", isSavedToFavorites: false, authorImg: "")]
+    var quotes = [Quote(id: -1, text: "Loading...", author: "...", isSavedToFavorites: nil, authorImg: "")]
     var quoteAPI = QuoteAPI()
     let headerView = ProfileHeader()    
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
@@ -27,7 +31,8 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        fetchDataToTableView()
+        quotesCoreData.delegate = self
+        fetchDataToTableView(author: selectedCharacter.name)
     }
     
     override func viewDidLoad() {
@@ -38,35 +43,24 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Helpers
-    func fetchDataToTableView() {
-        print(#function)
-        
-        quotesCoreData.retrieveQuotes(of: selectedCharacter.name) { result in
-            switch result {
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.quotes = data
-                    print("self.quotes from \(#function): \(self.quotes)")
-                    if self.quotes.count == 0 {
-                        self.quotes.append(Quote(id: -1, text: "Can't find any quote.", author: ""))
-                        self.tableView.reloadData()
-                    } else {
-                        self.tableView.reloadData()
-                    }
-                }
-            case .failure(_):
-                break
-            }
+    func fetchDataToTableView(author: String) {
+        if quotesCoreData.checkSavedQuotes(of: author) {
+            quotesCoreData.retrieveQuotesFromCoreData(of: author)
+        } else {
+            quotesCoreData.getQuotesFromAPIAndSaveToCoreData(of: author)
         }
+        tableView.reloadData()
     }
     
     func configureUI() {
-        
-        tableView.contentInsetAdjustmentBehavior = .never // TODO: Delete and fix tapbar bug.
+        //tableView.insetsContentViewsToSafeArea = true
+        //tableView.contentInsetAdjustmentBehavior = .never // TODO: Delete and fix tapbar bug.
         tableViewSetup()
     }
     
     func tableViewSetup() {
+        title = "\(selectedCharacter.name)"
+        
         tableView.backgroundColor = .systemGray6
         tableView.register(ProfileQuoteCell.self, forCellReuseIdentifier: ProfileQuoteCell().cellReuseIdentifier)
         
@@ -97,29 +91,31 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Selectors
-    @objc func addToFavorite(sender: UIButton) {
+    @objc func deleteFromFavorite(sender: UIButton) {
+        
+        self.numberOfReloads += 1
+        
+        print("DEBUG: \(self.numberOfReloads) ––––––––––––––")
         
         let cellNumber = sender.tag
         
-        // How to reach cell in tableView
-        let indexPath = IndexPath(row: cellNumber, section: 0)
-        let cell = tableView.cellForRow(at: indexPath) as! ProfileQuoteCell
+        var quote = quotes[cellNumber]
+        let quoteId = quote.id
+        let authorImg = selectedCharacter.img
         
-        let quoteId = quotes[cellNumber].id
-        let quoteSavedStatus = quotes[cellNumber].isSavedToFavorites
+        let quoteSavedStatus = quote.isSavedToFavorites
         
-        let buttonStatus = cell.addToFavoriteButton.isSelected
-        cell.addToFavoriteButton.changeButtonImage(buttonSelected: buttonStatus)
+      
+        favoriteQuotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, authorImg: authorImg, currentFavoriteStatus: quoteSavedStatus!)
         
-        quotesCoreData.updateIsSavedToFavorites(quoteId: quoteId, authorImg: selectedCharacter.img, currentFavoriteStatus: quoteSavedStatus!)
-        
-        if quoteSavedStatus! {
+        if quotes[cellNumber].isSavedToFavorites! {
             quotes[cellNumber].isSavedToFavorites = false
         } else {
             quotes[cellNumber].isSavedToFavorites = true
         }
-        
+                
         tableView.reloadData()
+        
     }
     
 }
@@ -144,20 +140,46 @@ extension ProfileController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
+
         
-        if quotes[indexPath.row].isSavedToFavorites ?? false {
-            cell.addToFavoriteButton.isSelected = true
-            cell.addToFavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        let quote = quotes[indexPath.row]
+        
+        if quote.id == -1 {
+            cell.addToFavoriteButton.isHidden = true
+        } else {
+            cell.addToFavoriteButton.isHidden = false
+        }
+        
+        if quote.isSavedToFavorites ?? false {
+            cell.addToFavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.addToFavoriteButton.imageView?.tintColor = .systemRed
+        } else {
+            cell.addToFavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            cell.addToFavoriteButton.imageView?.tintColor = .systemBlue
         }
         
         cell.addToFavoriteButton.tag = indexPath.row
         
         cell.quoteLabel.text = quotes[indexPath.row].text
         
-        cell.addToFavoriteButton.addTarget(self, action: #selector(addToFavorite(sender:)), for: .touchUpInside)
-        
+        cell.addToFavoriteButton.addTarget(self, action: #selector(deleteFromFavorite(sender:)), for: .touchUpInside)
         return cell
     }
     
+}
+
+extension ProfileController: QuotesCoreDataDelegate {
+    func fetchQuotes(quotesFromCoreData: [Quote]) {
+        
+        DispatchQueue.main.async {
+            self.quotes = quotesFromCoreData
+            
+            if self.quotes.count == 0 {
+                self.quotes.append(Quote(id: -1, text: "Can't find any quote.", author: ""))
+                self.tableView.reloadData()
+            } else {
+                self.tableView.reloadData()
+            }
+        }
+    }
 }

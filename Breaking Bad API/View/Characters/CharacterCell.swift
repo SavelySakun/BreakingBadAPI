@@ -16,6 +16,8 @@ class CharacterCell: UITableViewCell {
     
     let characterImageView: UIImageViewAligned = {
         let iv = UIImageViewAligned()
+        
+        iv.image = UIImage(systemName: "person")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .systemGray6
