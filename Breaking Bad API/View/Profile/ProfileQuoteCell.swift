@@ -32,12 +32,11 @@ class ProfileQuoteCell: UITableViewCell {
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+                
         addSubview(quoteLabel)
         addSubview(addToFavoriteButton)
-        
-                
-        quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: addToFavoriteButton.leftAnchor, paddingTop: 25, paddingLeft: 20, paddingBottom: 25, paddingRight: 20)
+                        
+        quoteLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: addToFavoriteButton.leftAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 20)
         
         
         addToFavoriteButton.centerY(inView: quoteLabel)
@@ -47,8 +46,5 @@ class ProfileQuoteCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Helpers
-   
     
 }

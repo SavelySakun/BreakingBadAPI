@@ -13,9 +13,6 @@ import SDWebImage
 class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    
-    var numberOfReloads = 0
-    
     // Core Data properties
     let quotesCoreData = QuotesCoreData()
     let favoriteQuotesCoreData = FavoriteQuoteCoreData()
@@ -60,7 +57,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     func tableViewSetup() {
         title = "\(selectedCharacter.name)"
-        
+                
         tableView.backgroundColor = .systemGray6
         tableView.register(ProfileQuoteCell.self, forCellReuseIdentifier: ProfileQuoteCell().cellReuseIdentifier)
         
@@ -69,10 +66,8 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     func headerViewSetup() {
         tableView.tableHeaderView = headerView
-        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 1.2)
+        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: 600)
         tableView.sectionHeaderHeight = 45
-        
-        let imageURL = URL(string: selectedCharacter.img)
         
         headerView.nameLabel.text = selectedCharacter.name
         headerView.nicknameLabel.text = selectedCharacter.nickname
@@ -81,8 +76,11 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         headerView.actorView.propertyLabel.text = selectedCharacter.portrayed
         headerView.ocupationView.propertyLabel.text = selectedCharacter.occupation[0]
         
+        let imageURL = URL(string: selectedCharacter.img)
+        
         let avatarImageView: UIImageView = {
             let iv = UIImageView()
+            
             iv.sd_setImage(with: imageURL)
             return iv
         }()
@@ -93,13 +91,9 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     // MARK: - Selectors
     @objc func deleteFromFavorite(sender: UIButton) {
         
-        self.numberOfReloads += 1
-        
-        print("DEBUG: \(self.numberOfReloads) ––––––––––––––")
-        
         let cellNumber = sender.tag
         
-        var quote = quotes[cellNumber]
+        let quote = quotes[cellNumber]
         let quoteId = quote.id
         let authorImg = selectedCharacter.img
         
@@ -140,7 +134,6 @@ extension ProfileController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
-
         
         let quote = quotes[indexPath.row]
         

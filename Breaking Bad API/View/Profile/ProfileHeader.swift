@@ -40,7 +40,7 @@ public class ProfileHeader: UIView {
     
     let nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
         label.textColor = .black
         return label
     }()
@@ -64,33 +64,27 @@ public class ProfileHeader: UIView {
     
     // MARK: - Helpers
     func configureUI() {
-        
-        //view.backgroundColor = .systemPink
-        
+                
         configureIcons()
         
         addSubview(view)
-        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0)
         
+        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0)
+                
         view.addSubview(profileImageView)
         profileImageView.setHeight(height: 200)
-        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 100, paddingRight: 100)
-        
-        
-        let nameAndNickStack = UIStackView(arrangedSubviews: [nameLabel, nicknameLabel])
-        view.addSubview(nameAndNickStack)
-        
-        nameAndNickStack.alignment = .center
-        nameAndNickStack.axis = .vertical
-        nameAndNickStack.anchor(top: profileImageView.bottomAnchor, paddingTop: 20)
-        nameAndNickStack.centerX(inView: view)
+        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 30, paddingLeft: 100, paddingRight: 100)
         
         let propertiesStack = UIStackView(arrangedSubviews: [statusView, birthdayView, ocupationView, actorView])
+        view.addSubview(propertiesStack)
+        
+        view.addSubview(nicknameLabel)
+        nicknameLabel.centerX(inView: profileImageView)
+        
         propertiesStack.axis = .vertical
         propertiesStack.spacing = 7
         
-        view.addSubview(propertiesStack)
-        propertiesStack.anchor(top: nameAndNickStack.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 60, paddingBottom: 30, paddingRight: 60)
+        propertiesStack.anchor(top: nicknameLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 60, paddingBottom: 40, paddingRight: 60)
     }
     
     func configureIcons() {
