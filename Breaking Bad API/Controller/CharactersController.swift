@@ -8,11 +8,6 @@
 // Useful video about search controller - https://www.youtube.com/watch?v=P5ob4TXIK90
 // Great tutorial about Core Data – https://www.raywenderlich.com/7569-getting-started-with-core-data-tutorial
 
-/* TO-DO LIST:
- – delete all methods and properties with 'ED'
- 
- */
-
 import UIKit
 import SDWebImage
 import CoreData
@@ -33,7 +28,7 @@ class CharactersController: UIViewController {
     lazy var searchController: UISearchController = {
         
         let searchController = UISearchController(searchResultsController: nil)
-        
+                
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Character"
@@ -57,16 +52,12 @@ class CharactersController: UIViewController {
         configureUI()
     }
     
-    
-    // MARK: - Selectors
-    
     // MARK: - Helpers
     func configureUI() {
         
-        // Design setup.
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Characters"
+        navigationItem.searchController = searchController
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
         view.addSubview(tableView)
@@ -77,7 +68,6 @@ class CharactersController: UIViewController {
     
     func configureTableViewUI() {
         
-        tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = .white
         tableView.frame = view.frame
         tableView.rowHeight = 80
@@ -103,11 +93,11 @@ extension CharactersController {
         })
         tableView.reloadData()
     }
+    
     // Helpers for search.
     func isSearchBarEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    
     func isFiltering() -> Bool {
         return searchController.isActive && (!isSearchBarEmpty())
     }
@@ -123,7 +113,7 @@ extension CharactersController: UITableViewDataSource {
     
     // Cells setup.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+                
         let cell = tableView.dequeueReusableCell(withIdentifier: CharacterCell().cellReuseIdentifier, for: indexPath) as! CharacterCell
         
         cell.accessoryType = .disclosureIndicator
@@ -159,21 +149,26 @@ extension CharactersController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let index = indexPath.row
+        tableView.deselectRow(at: indexPath, animated: true)
         
+        let index = indexPath.row
         let vc = ProfileController()
-        vc.selectedCharacter = characters[index]
+        
+        if isFiltering() {
+            vc.selectedCharacter = filteredCharacters[index]
+        } else {
+            vc.selectedCharacter = characters[index]
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-// Fetching characters array from Core Data.
+// Fetching characters array from CoreData.
 extension CharactersController: CharactersCoreDataDelegate {
     func fetchCharacters(charactersFromCoreData: [Character]) {
         
         characters = charactersFromCoreData
         tableView.reloadData()
-        
     }
 }
 

@@ -18,14 +18,13 @@ protocol QuotesCoreDataDelegate: class {
 class QuotesCoreData {
     
     // MARK: - Properties
-    var quotesCoreData: [NSManagedObject] = []
+    var quotesArrayFromCoreData: [NSManagedObject] = []
     var quotes = [Quote]()
     let quoteAPI = QuoteAPI()
     
     weak var delegate: QuotesCoreDataDelegate?
     
     // MARK: - Methods
-    
     // 0. Helper method for Core Data.
     func getContext() -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -35,7 +34,6 @@ class QuotesCoreData {
     // 1. Check is there any quotes already saved to Core Data.
     func checkSavedQuotes(of author: String) -> Bool {
         
-        
         let managedContext = getContext()
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "QuoteCoreData")
@@ -44,14 +42,12 @@ class QuotesCoreData {
         fetchRequest.predicate = predicate // Filter by selected author name.
         
         do {
-            quotesCoreData = try managedContext.fetch(fetchRequest)
-            
-            
+            quotesArrayFromCoreData = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        if quotesCoreData.count != 0 {
+        if quotesArrayFromCoreData.count != 0 {
             return true
         } else {
             return false
@@ -94,7 +90,6 @@ class QuotesCoreData {
         } catch let error as NSError {
             print("Could not save: \(error.localizedDescription), \(error.userInfo)")
         }
-        
         retrieveQuotesFromCoreData(of: author)
     }
     
@@ -109,11 +104,11 @@ class QuotesCoreData {
         fetchRequest.predicate = predicate // Filter by selected author name.
         
         do {
-            quotesCoreData = try managedContext.fetch(fetchRequest)
-            let totalQuotes = quotesCoreData.count
+            quotesArrayFromCoreData = try managedContext.fetch(fetchRequest)
+            let totalQuotes = quotesArrayFromCoreData.count
                         
             for index in stride(from: 0, to: totalQuotes, by: 1) {
-                let quote = quotesCoreData[index]
+                let quote = quotesArrayFromCoreData[index]
                 quotes.append(Quote(
                     id: quote.value(forKey: "id") as! Int,
                     text: quote.value(forKey: "text") as! String,
@@ -127,5 +122,4 @@ class QuotesCoreData {
         delegate?.fetchQuotes(quotesFromCoreData: quotes)
         quotes = [Quote]()
     }
-    
 }

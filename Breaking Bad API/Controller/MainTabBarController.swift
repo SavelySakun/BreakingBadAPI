@@ -12,7 +12,6 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tabBarSetup()
     }
     
@@ -24,11 +23,8 @@ class MainTabBarController: UITabBarController {
         
         let favoritesController = createNavigationController(vc: FavoritesController(), image: UIImage(systemName: "heart.circle.fill"), tabBarTitle: "Favorite Quotes")
     
-        
         viewControllers = [charactersController, favoritesController]
-        
     }
-
 }
 
 extension UITabBarController {
@@ -41,5 +37,4 @@ extension UITabBarController {
         navController.title = tabBarTitle
         return navController
     }
-    
 }

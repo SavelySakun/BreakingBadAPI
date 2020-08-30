@@ -16,7 +16,7 @@ protocol CharactersCoreDataDelegate: class {
 class CharactersCoreData {
     
     // MARK: - Properties
-    var charactersCoreData: [NSManagedObject] = []
+    var charactersArrayFromCoreData: [NSManagedObject] = []
     var characters = [Character]()
     let characterAPI = CharacterAPI()
     
@@ -24,7 +24,6 @@ class CharactersCoreData {
     
     // MARK: - Methods
     func retrieveCharacters() {
-        
         
         if checkSavedDataAndRetriveIfItsNotEmpty() {
             characterAPI.performRequest { result in
@@ -49,8 +48,6 @@ class CharactersCoreData {
     func saveCoreData(charactersData: [Character]) {
         
         let managedContext = getContext()
-        
-        // Sets values of characters into NSManagedObject
         let totalCharacters = charactersData.count
         
         for index in stride(from: 0, to: totalCharacters, by: 1) {
@@ -84,13 +81,12 @@ class CharactersCoreData {
             NSFetchRequest<NSManagedObject>(entityName: "CharacterCoreData")
         
         do {
-            charactersCoreData = try managedContext.fetch(fetchRequest)
-            
-            let totalCharacters = charactersCoreData.count
-            
+            charactersArrayFromCoreData = try managedContext.fetch(fetchRequest)
+            let totalCharacters = charactersArrayFromCoreData.count
+
             for index in stride(from: 0, to: totalCharacters, by: 1) {
                 
-                let character = charactersCoreData[index]
+                let character = charactersArrayFromCoreData[index]
                 characters.append(Character(
                     
                     id: character.value(forKey: "id") as! Int,
@@ -117,12 +113,12 @@ class CharactersCoreData {
             NSFetchRequest<NSManagedObject>(entityName: "CharacterCoreData")
         
         do {
-            charactersCoreData = try managedContext.fetch(fetchRequest)
+            charactersArrayFromCoreData = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        if charactersCoreData.count == 0 {
+        if charactersArrayFromCoreData.count == 0 {
             return true
         } else {
             retrieveFromCoreData()

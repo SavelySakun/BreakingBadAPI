@@ -54,13 +54,11 @@ class FavoriteQuoteCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-    
         addSubview(characterImageView)
         
         characterImageView.anchor(left: leftAnchor, paddingLeft: 20)
         characterImageView.setDimensions(height: 45, width: 45)
         characterImageView.layer.cornerRadius = 45 / 2
-        
         
         let stack = UIStackView(arrangedSubviews: [nameLabel, quoteLabel])
         
@@ -75,14 +73,9 @@ class FavoriteQuoteCell: UITableViewCell {
         addSubview(deleteButton)
         deleteButton.centerY(inView: stack)
         deleteButton.anchor(left: stack.rightAnchor, right: rightAnchor, paddingLeft: 15, paddingRight: 20)
-        
-        
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

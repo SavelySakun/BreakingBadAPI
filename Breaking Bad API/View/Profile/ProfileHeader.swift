@@ -12,7 +12,6 @@ import UIImageViewAlignedSwift
 public class ProfileHeader: UIView {
     
     // MARK: - Properties
-    
     let view: UIView = {
         let v = UIView()
         v.backgroundColor = .systemGray6
@@ -32,12 +31,6 @@ public class ProfileHeader: UIView {
         return iv
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        return label
-    }()
-    
     let nicknameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
@@ -54,7 +47,6 @@ public class ProfileHeader: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
         configureUI()
     }
     
@@ -68,7 +60,6 @@ public class ProfileHeader: UIView {
         configureIcons()
         
         addSubview(view)
-        
         view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0)
                 
         view.addSubview(profileImageView)
@@ -93,5 +84,4 @@ public class ProfileHeader: UIView {
         statusView.iconImageView.image = #imageLiteral(resourceName: "death icon")
         ocupationView.iconImageView.image = #imageLiteral(resourceName: "work icon")
     }
-    
 }
