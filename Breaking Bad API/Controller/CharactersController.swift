@@ -54,7 +54,7 @@ class CharactersController: UIViewController {
     
     // MARK: - Helpers
     func configureUI() {
-        
+                
         navigationItem.title = "Characters"
         navigationItem.searchController = searchController
         navigationController?.navigationBar.prefersLargeTitles = true

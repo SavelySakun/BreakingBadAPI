@@ -62,7 +62,7 @@ class FavoritesController: UIViewController {
     }
     
     // MARK: - Selectors
-    @objc func deleteFromFavorite(sender: UIButton) {
+    @objc func updateFavorites(sender: UIButton) {
         
         let cellNumber = sender.tag
         let quoteId = quotes[cellNumber].id
@@ -96,7 +96,7 @@ extension FavoritesController: UITableViewDataSource {
         cell.characterImageView.sd_setImage(with: imageURL)
         
         cell.deleteButton.tag = indexPath.row
-        cell.deleteButton.addTarget(self, action: #selector(deleteFromFavorite(sender:)), for: .touchUpInside)
+        cell.deleteButton.addTarget(self, action: #selector(updateFavorites(sender:)), for: .touchUpInside)
 
         return cell
     }

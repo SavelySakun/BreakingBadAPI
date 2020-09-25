@@ -80,7 +80,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Selectors
-    @objc func deleteFromFavorite(sender: UIButton) {
+    @objc func updateFavorites(sender: UIButton) {
         
         let cellNumber = sender.tag
         let quote = quotes[cellNumber]
@@ -139,7 +139,7 @@ extension ProfileController {
         
         cell.addToFavoriteButton.tag = indexPath.row
         cell.quoteLabel.text = quotes[indexPath.row].text
-        cell.addToFavoriteButton.addTarget(self, action: #selector(deleteFromFavorite(sender:)), for: .touchUpInside)
+        cell.addToFavoriteButton.addTarget(self, action: #selector(updateFavorites(sender:)), for: .touchUpInside)
         return cell
     }
 }

@@ -38,9 +38,6 @@ class QuoteAPI {
             }
             
             completionHandler(.success(self.quotes))
-            
-            // DELETE later:
-            // self.delegate?.fetchQuotes(quotesArray: self.quotes)
         }
         
         task.resume()
