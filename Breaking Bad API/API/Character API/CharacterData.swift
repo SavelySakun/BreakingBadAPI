@@ -15,7 +15,7 @@ struct CharacterElement: Codable {
     var name, birthday: String
     var occupation: [String]
     var img, status, nickname: String
-    var appearance: [Int]
+    var appearance: [Int]?
     var portrayed: String
 }
 

@@ -29,10 +29,12 @@ class CharactersCoreData {
             characterAPI.performRequest { result in
                 switch result {
                 case .success(let data):
+                    
                     DispatchQueue.main.async {
                         self.saveCoreData(charactersData: data)
                         self.retrieveFromCoreData()
                     }
+    
                 case .failure(_):
                     break
                 }

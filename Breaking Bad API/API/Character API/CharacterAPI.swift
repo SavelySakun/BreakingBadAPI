@@ -30,7 +30,16 @@ class CharacterAPI {
             let totalCharacters = data.count - 1
             
             for index in stride(from: 0, to: totalCharacters, by: 1) {
-                self.characters.append(Character(id: data[index].char_id, name: data[index].name, birthday: data[index].birthday, occupation: data[index].occupation, img: data[index].img, status: data[index].status, nickname: data[index].nickname, appearance: data[index].appearance, portrayed: data[index].portrayed))
+                self.characters.append(Character(
+                    id: data[index].char_id,
+                    name: data[index].name,
+                    birthday: data[index].birthday,
+                    occupation: data[index].occupation,
+                    img: data[index].img,
+                    status: data[index].status,
+                    nickname: data[index].nickname,
+                    appearance: data[index].appearance ?? [0],
+                    portrayed: data[index].portrayed))
             }
             
             completionHandler(.success(self.characters))

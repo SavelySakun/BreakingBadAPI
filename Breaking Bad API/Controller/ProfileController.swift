@@ -18,11 +18,14 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     let favoriteQuotesCoreData = FavoriteQuoteCoreData()
     
     // TableView properties
+    //    let tableView = UITableView()
     var quotes = [Quote(id: -1, text: "Loading...", author: "...", isSavedToFavorites: nil, authorImg: "")]
     var quoteAPI = QuoteAPI()
-    let headerView = ProfileHeader()    
+    
     var selectedCharacter: Character = Character(id: 0, name: "Empty", birthday: "Empty", occupation: ["Empty"], img: "Empty", status: "Empty", nickname: "Empty", appearance: [0], portrayed: "Empty")
     
+    // UI
+    let headerView = ProfileHeader()
     
     // MARK: - Lifecycle
     override func viewDidAppear(_ animated: Bool) {
@@ -37,6 +40,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         
         configureUI()
     }
+    
     
     // MARK: - Helpers
     func fetchDataToTableView(author: String) {
@@ -55,13 +59,15 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     
     func tableViewSetup() {
         title = "\(selectedCharacter.name)"
+        tableView.sectionHeaderHeight = 45
         tableView.backgroundColor = .systemGray6
         tableView.register(ProfileQuoteCell.self, forCellReuseIdentifier: ProfileQuoteCell().cellReuseIdentifier)
     }
     
     func headerViewSetup() {
+        
         tableView.tableHeaderView = headerView
-        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: 600)
+        headerView.frame = .init(x: 0, y: 0, width: view.frame.width, height: 620)
         tableView.sectionHeaderHeight = 45
         
         headerView.nicknameLabel.text = selectedCharacter.nickname
@@ -76,8 +82,10 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
             iv.sd_setImage(with: imageURL)
             return iv
         }()
+        
         headerView.profileImageView.image = avatarImageView.image
     }
+    
     
     // MARK: - Selectors
     @objc func updateFavorites(sender: UIButton) {
@@ -97,27 +105,12 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         }
         tableView.reloadData()
     }
-}
-
-// MARK: - TableView Setup
-extension ProfileController {
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Popular quotes"
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-        header.textLabel?.textAlignment = .center
-    }
-    
-    // Quotes table view cells.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
         
         cell.selectionStyle = .none
@@ -142,13 +135,24 @@ extension ProfileController {
         cell.addToFavoriteButton.addTarget(self, action: #selector(updateFavorites(sender:)), for: .touchUpInside)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Quotes"
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        header.textLabel?.textAlignment = .center
+    }
 }
+
 
 extension ProfileController: QuotesCoreDataDelegate {
     func fetchQuotes(quotesFromCoreData: [Quote]) {
         
         DispatchQueue.main.async {
             self.quotes = quotesFromCoreData
+            
             if self.quotes.count == 0 {
                 self.quotes.append(Quote(id: -1, text: "Can't find any quote.", author: ""))
                 self.tableView.reloadData()

@@ -42,17 +42,23 @@ class CharactersController: UIViewController {
         return searchController
     }()
     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        charactersCoreData.delegate = self
-        charactersCoreData.retrieveCharacters()
-        
+        loadCharactersListFromCoreData()
         configureUI()
     }
     
+    
     // MARK: - Helpers
+    func loadCharactersListFromCoreData() {
+        charactersCoreData.delegate = self
+        
+        charactersCoreData.retrieveCharacters()
+    }
+    
     func configureUI() {
                 
         navigationItem.title = "Characters"
@@ -60,8 +66,6 @@ class CharactersController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
-        view.addSubview(tableView)
-        
         configureTableViewUI()
     }
     
@@ -69,12 +73,24 @@ class CharactersController: UIViewController {
     func configureTableViewUI() {
         
         tableView.backgroundColor = .white
-        tableView.frame = view.frame
         tableView.rowHeight = 80
+        
         tableView.register(CharacterCell.self, forCellReuseIdentifier: CharacterCell().cellReuseIdentifier)
         
         // Shows separator only for existing cells.
         tableView.tableFooterView = UIView()
+        
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tableViewConstraints: [NSLayoutConstraint] = [
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(tableViewConstraints)
         
         // Table View Delegates.
         tableView.delegate = self
@@ -128,7 +144,11 @@ extension CharactersController: UITableViewDataSource {
         
         // Fetching data.
         let imageURL = URL(string: currentCharacter.img)
-        cell.characterImageView.sd_setImage(with: imageURL)
+        
+        DispatchQueue.main.async {
+            cell.characterImageView.sd_setImage(with: imageURL)
+        }
+
         cell.nameLabel.text = currentCharacter.name
         cell.nicknameLabel.text = currentCharacter.nickname
         return cell
@@ -168,7 +188,10 @@ extension CharactersController: CharactersCoreDataDelegate {
     func fetchCharacters(charactersFromCoreData: [Character]) {
         
         characters = charactersFromCoreData
-        tableView.reloadData()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 

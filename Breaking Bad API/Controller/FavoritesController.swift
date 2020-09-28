@@ -19,6 +19,7 @@ class FavoritesController: UIViewController {
     let quotesCoreData = QuotesCoreData()
     let favoriteQuotesCoreData = FavoriteQuoteCoreData()
 
+    
     // MARK: - Lifecycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -29,6 +30,7 @@ class FavoritesController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
+    
     
     // MARK: - Helpers
     func configureUI() {
@@ -42,9 +44,19 @@ class FavoritesController: UIViewController {
     
     func configureTableView() {
         
-        tableView.frame = view.frame
         tableView.dataSource = self
         tableView.register(FavoriteQuoteCell.self, forCellReuseIdentifier: FavoriteQuoteCell().cellReuseIdentifier)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tableViewConstraints: [NSLayoutConstraint] = [
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(tableViewConstraints)
     }
     
     func fetchDataToTableView() {        
@@ -60,6 +72,7 @@ class FavoritesController: UIViewController {
             }
         }
     }
+    
     
     // MARK: - Selectors
     @objc func updateFavorites(sender: UIButton) {

@@ -12,17 +12,12 @@ import UIImageViewAlignedSwift
 public class ProfileHeader: UIView {
     
     // MARK: - Properties
-    let view: UIView = {
-        let v = UIView()
-        v.backgroundColor = .systemGray6
-        return v
-    }()
     
-    let profileImageView: UIImageViewAligned = {
-        let iv = UIImageViewAligned()
+    let view = UIView()
+    let profileImageView: ProfileImageView = {
+        let iv = ProfileImageView()
         
         iv.image = UIImage(systemName: "person")
-        iv.layer.cornerRadius = 200 / 2
         iv.clipsToBounds = true
         iv.alignTop = true
         
@@ -34,6 +29,7 @@ public class ProfileHeader: UIView {
     let nicknameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textAlignment = .center
         label.textColor = .black
         return label
     }()
@@ -44,10 +40,17 @@ public class ProfileHeader: UIView {
     let ocupationView = CharacterProperty()
     var actorView = CharacterProperty()
     
+    // Constraints
+    var regularConstraints: [NSLayoutConstraint] = []
+    var compactConstraints: [NSLayoutConstraint] = []
+    var viewConstraints: [NSLayoutConstraint] = []
+    
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
+        
+        configureUI(traitCollection: traitCollection)
     }
     
     required init?(coder: NSCoder) {
@@ -55,28 +58,46 @@ public class ProfileHeader: UIView {
     }
     
     // MARK: - Helpers
-    func configureUI() {
-                
+    func configureUI(traitCollection: UITraitCollection) {
+        
         configureIcons()
         
-        addSubview(view)
-        view.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0)
-                
-        view.addSubview(profileImageView)
-        profileImageView.setHeight(height: 200)
-        profileImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 30, paddingLeft: 100, paddingRight: 100)
-        
+        let profileImageAndNameStack = UIStackView(arrangedSubviews: [profileImageView, nicknameLabel])
         let propertiesStack = UIStackView(arrangedSubviews: [statusView, birthdayView, ocupationView, actorView])
+        
+        profileImageAndNameStack.axis = .vertical
+        propertiesStack.axis = .vertical
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        profileImageAndNameStack.translatesAutoresizingMaskIntoConstraints = false
+        propertiesStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(view)
+        view.addSubview(profileImageAndNameStack)
         view.addSubview(propertiesStack)
         
-        view.addSubview(nicknameLabel)
-        nicknameLabel.centerX(inView: profileImageView)
+        profileImageAndNameStack.spacing = 10
+        propertiesStack.spacing = 10
         
-        propertiesStack.axis = .vertical
-        propertiesStack.spacing = 7
+        regularConstraints.append(contentsOf: [
+            view.topAnchor.constraint(equalTo: topAnchor),
+            view.leftAnchor.constraint(equalTo: leftAnchor),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor),
+            view.rightAnchor.constraint(equalTo: rightAnchor),
+            
+            profileImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            profileImageAndNameStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            profileImageAndNameStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileImageAndNameStack.bottomAnchor.constraint(equalTo: propertiesStack.topAnchor, constant: -20),
+            
+            propertiesStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            propertiesStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            propertiesStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        ])
         
-        propertiesStack.anchor(top: nicknameLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 60, paddingBottom: 40, paddingRight: 60)
+        NSLayoutConstraint.activate(regularConstraints)
     }
+    
     
     func configureIcons() {
         birthdayView.iconImageView.image = #imageLiteral(resourceName: "birthday icon")

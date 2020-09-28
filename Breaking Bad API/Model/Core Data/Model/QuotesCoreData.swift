@@ -60,9 +60,11 @@ class QuotesCoreData {
         quoteAPI.performRequest(author: author) { result in
             switch result {
             case .success(let data):
+                
                 DispatchQueue.main.async {
                     self.saveQuotesToCoreData(quotesData: data, of: author)
                 }
+
             case .failure(_):
                 break
             }
