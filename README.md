@@ -9,8 +9,8 @@
 
 **Стек используемых технологий:**
 - UIKit, без использования Storyboard.
-— CoreData.
 - Работа с API [Breaking Bad](https://breakingbadapi.com/).
+- CoreData.
 - Pod: UIImageViewAlignedSwift для выравнивания изображения внутри imageView.
 - Архитектура MVC.
 
