@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 
-class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
+class ProfileController: UITableViewController {
     
     // MARK: - Properties
     // Core Data properties
@@ -18,7 +18,6 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
     let favoriteQuotesCoreData = FavoriteQuoteCoreData()
     
     // TableView properties
-    //    let tableView = UITableView()
     var quotes = [Quote(id: -1, text: "Loading...", author: "...", isSavedToFavorites: nil, authorImg: "")]
     var quoteAPI = QuoteAPI()
     
@@ -106,6 +105,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         tableView.reloadData()
     }
     
+    // MARK: - TableView setup
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quotes.count
     }
@@ -114,6 +114,8 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileQuoteCell().cellReuseIdentifier, for: indexPath) as! ProfileQuoteCell
         
         cell.selectionStyle = .none
+        
+        cell.contentView.isUserInteractionEnabled = false // You need to add it, otherwise the button in the cell will not work.
         
         let quote = quotes[indexPath.row]
         if quote.id == -1 {
@@ -133,6 +135,7 @@ class ProfileController: UITableViewController, UIGestureRecognizerDelegate {
         cell.addToFavoriteButton.tag = indexPath.row
         cell.quoteLabel.text = quotes[indexPath.row].text
         cell.addToFavoriteButton.addTarget(self, action: #selector(updateFavorites(sender:)), for: .touchUpInside)
+        
         return cell
     }
     

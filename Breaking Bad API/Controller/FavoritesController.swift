@@ -99,6 +99,7 @@ extension FavoritesController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteQuoteCell().cellReuseIdentifier, for: indexPath) as! FavoriteQuoteCell
         
         cell.selectionStyle = .none
+        cell.contentView.isUserInteractionEnabled = false
         
         let quote = quotes[indexPath.row]
         cell.nameLabel.text = quote.author
